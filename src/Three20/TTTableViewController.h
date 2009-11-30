@@ -32,6 +32,7 @@
   id<UITableViewDelegate> _tableDelegate;
   NSTimer* _bannerTimer;
   UITableViewStyle _tableViewStyle;
+  UITableViewCellSeparatorStyle _tableViewSeparatorStyle;
   UIInterfaceOrientation _lastInterfaceOrientation;
   BOOL _variableHeightRows;
   BOOL _showTableShadows;
@@ -69,6 +70,11 @@
 @property (nonatomic) UITableViewStyle tableViewStyle;
 
 /**
+ * The separator style of the table view.
+ */
+@property(nonatomic) UITableViewCellSeparatorStyle tableViewSeparatorStyle;
+
+/** 
  * Indicates if the table should support non-fixed row heights.
  */
 @property (nonatomic) BOOL variableHeightRows;

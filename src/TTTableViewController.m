@@ -45,7 +45,9 @@ static const CGFloat kBannerViewHeight = 22;
             tableOverlayView = _tableOverlayView,
             loadingView = _loadingView, errorView= _errorView, emptyView = _emptyView,
             menuView = _menuView, dataSource = _dataSource, tableViewStyle = _tableViewStyle,
-            variableHeightRows = _variableHeightRows, showTableShadows = _showTableShadows;
+            showTableShadows = _showTableShadows,
+            tableViewSeparatorStyle = _tableViewSeparatorStyle,
+            variableHeightRows = _variableHeightRows;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // private
@@ -144,6 +146,8 @@ static const CGFloat kBannerViewHeight = 22;
 - (id)initWithStyle:(UITableViewStyle)style {
   if (self = [self initWithNibName:nil bundle:nil]) {
     _tableViewStyle = style;
+    _tableViewSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _lastInterfaceOrientation = self.interfaceOrientation;
   }
 
   return self;
@@ -509,6 +513,7 @@ static const CGFloat kBannerViewHeight = 22;
     _tableView = [[TTTableView alloc] initWithFrame:self.view.bounds style:_tableViewStyle];
     _tableView.autoresizingMask =  UIViewAutoresizingFlexibleWidth
                                    | UIViewAutoresizingFlexibleHeight;
+    _tableView.separatorStyle = _tableViewSeparatorStyle;
 
     UIColor* backgroundColor = _tableViewStyle == UITableViewStyleGrouped
       ? TTSTYLEVAR(tableGroupedBackgroundColor)
