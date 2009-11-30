@@ -21,6 +21,7 @@
 
 #import "Three20/UIColorAdditions.h"
 #import "Three20/UIFontAdditions.h"
+#import "Three20/UILabelAdditions.h"
 #import "Three20/UIImageAdditions.h"
 #import "Three20/UINavigationControllerAdditions.h"
 #import "Three20/UITabBarControllerAdditions.h"

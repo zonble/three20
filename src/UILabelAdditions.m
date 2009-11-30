@@ -14,28 +14,28 @@
 // limitations under the License.
 //
 
-#import "Three20/TTTableViewVarHeightDelegate.h"
+#import "Three20/UILabelAdditions.h"
 
-#import "Three20/TTTableViewDataSource.h"
-#import "Three20/TTTableViewCell.h"         // For tableView:rowHeightForObject:
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation TTTableViewVarHeightDelegate
+#import "Three20/UIFontAdditions.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath {
-  id<TTTableViewDataSource> dataSource = (id<TTTableViewDataSource>)tableView.dataSource;
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+@implementation UILabel (TTCategory)
 
-  id cell = [dataSource tableView:tableView cellForRowAtIndexPath:indexPath];
-  if( [cell isKindOfClass:[TTTableViewCell class]] ) {
-    return [(TTTableViewCell*)cell rowHeightWithTableView:tableView];
-  } else {
-    return tableView.rowHeight;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)heightWithWidth:(CGFloat)width {
+  CGFloat maxHeight = self.numberOfLines * self.font.lineHeight;
+  if (0 == maxHeight) {
+    maxHeight = CGFLOAT_MAX;
   }
+  CGSize size = [self.text sizeWithFont: self.font
+                      constrainedToSize: CGSizeMake(width, maxHeight)
+                          lineBreakMode: self.lineBreakMode];
+
+  return size.height;
 }
 
 

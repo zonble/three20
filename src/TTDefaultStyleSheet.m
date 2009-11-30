@@ -625,8 +625,28 @@
   return RGBCOLOR(79, 89, 105);
 }
 
-- (UIColor*)tableTitleTextColor {
-  return RGBCOLOR(99, 109, 125);
+- (UIColor*)tableTitleColor {
+  return [UIColor blackColor];
+}
+
+- (UIColor*)tableTitleHighlightedColor {
+  return [UIColor whiteColor];
+}
+
+- (UIColor*)tableCaptionColor {
+  return RGBCOLOR(36, 112, 216);
+}
+
+- (UIColor*)tableCaptionHighlightedColor {
+  return [UIColor whiteColor];
+}
+
+- (UIColor*)tableCaptionTitleColor {
+  return [UIColor blackColor];
+}
+
+- (UIColor*)tableCaptionTitleHighlightedColor {
+  return [UIColor whiteColor];
 }
 
 - (UIColor*)tableHeaderTextColor {
@@ -724,16 +744,24 @@
   return [UIFont boldSystemFontOfSize:12];
 }
 
+- (UIFont*)tableTitleFont {
+  return [UIFont boldSystemFontOfSize:17];
+}
+
+- (UIFont*)tableCaptionFont {
+  return [UIFont boldSystemFontOfSize:13];
+}
+
+- (UIFont*)tableCaptionTitleFont {
+  return [UIFont boldSystemFontOfSize:15];
+}
+
 - (UIFont*)tableFont {
   return [UIFont boldSystemFontOfSize:17];
 }
 
 - (UIFont*)tableSmallFont {
   return [UIFont boldSystemFontOfSize:15];
-}
-
-- (UIFont*)tableTitleFont {
-  return [UIFont boldSystemFontOfSize:13];
 }
 
 - (UIFont*)tableTimestampFont {
@@ -782,6 +810,50 @@
 
 - (UITableViewCellSelectionStyle)tableSelectionStyle {
   return UITableViewCellSelectionStyleBlue;
+}
+
+- (UILineBreakMode)tableTitleLineBreakMode {
+  return UILineBreakModeTailTruncation;
+}
+
+- (NSInteger)tableTitleNumberOfLines {
+  return 0;
+}
+
+- (UITextAlignment)tableTitleTextAlignment {
+  return UITextAlignmentLeft;
+}
+
+- (UILineBreakMode)tableCaptionLineBreakMode {
+  return UILineBreakModeTailTruncation;
+}
+
+- (NSInteger)tableCaptionNumberOfLines {
+  return 1;
+}
+
+- (UITextAlignment)tableCaptionTextAlignment {
+  return UITextAlignmentLeft;
+}
+
+- (BOOL)tableCaptionAdjustsFontSizeToFitWidth {
+  return YES;
+}
+
+- (CGFloat)tableCaptionMinimumFontSize {
+  return 8;
+}
+
+- (UILineBreakMode)tableCaptionTitleLineBreakMode {
+  return UILineBreakModeTailTruncation;
+}
+
+- (NSInteger)tableCaptionTitleNumberOfLines {
+  return 1;
+}
+
+- (UITextAlignment)tableCaptionTitleTextAlignment {
+  return UITextAlignmentLeft;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

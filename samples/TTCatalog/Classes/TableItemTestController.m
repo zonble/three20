@@ -21,6 +21,8 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
     self.title = @"Table Items";
     self.variableHeightRows = YES;
 
+    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
     // Uncomment this to see how the table looks with the grouped style
     //self.tableViewStyle = UITableViewStyleGrouped;
 
@@ -34,10 +36,64 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
     // This demonstrates how to create a table with standard table "fields".  Many of these
     // fields with URLs that will be visited when the row is selected
     self.dataSource = [TTSectionedDataSource dataSourceWithObjects:
-      @"Links and Buttons",
-      [TTTableTextItem itemWithText:@"TTTableTextItem" URL:@"tt://tableItemTest"
-                       accessoryURL:@"http://www.google.com"],
-      [TTTableLink itemWithText:@"TTTableLink" URL:@"tt://tableItemTest"],
+      @"TTTableTitleItem",
+      [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"No URLs", kTableItemTitleKey,
+        nil]],
+      [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"URL", kTableItemTitleKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        nil]],
+      [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"accessoryURL", kTableItemTitleKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+      [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Both URLs", kTableItemTitleKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+      [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Long text with no urls set at all so this should truncate or wrap", kTableItemTitleKey,
+        nil]],
+      [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Long text with some urls set so this should truncate or wrap", kTableItemTitleKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+
+      @"TTTableCaptionItem",
+      [TTTableCaptionItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"No URLs", kTableItemTitleKey,
+        @"Caption", kTableItemCaptionKey,
+        nil]],
+      [TTTableCaptionItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"URL", kTableItemTitleKey,
+        @"A very long caption that realistically won't fit", kTableItemCaptionKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        nil]],
+      [TTTableCaptionItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"accessoryURL", kTableItemTitleKey,
+        @"A normal caption", kTableItemCaptionKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+      [TTTableCaptionItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Both URLs", kTableItemTitleKey,
+        @"Caption", kTableItemCaptionKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+      [TTTableCaptionItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Long text with no urls set at all so this should truncate or wrap", kTableItemTitleKey,
+        @"A very long caption that realistically won't fit", kTableItemCaptionKey,
+        nil]],
+      [TTTableCaptionItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Long text with some urls set so this should truncate or wrap", kTableItemTitleKey,
+        @"A normal caption", kTableItemCaptionKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+/* TODO: CLEANUP      [TTTableLink itemWithText:@"TTTableLink" URL:@"tt://tableItemTest"],
       [TTTableButton itemWithText:@"TTTableButton"],
       [TTTableCaptionItem itemWithText:@"TTTableCaptionItem" caption:@"caption"
                              URL:@"tt://tableItemTest"],
@@ -74,7 +130,7 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
 
       @"",
       [TTTableActivityItem itemWithText:@"TTTableActivityItem"],
-
+*/
       nil];
   }
   return self;
@@ -82,6 +138,14 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
 
 - (void)dealloc {
   [super dealloc];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return TTIsSupportedOrientation(interfaceOrientation);
+}
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+  [self.tableView reloadData];
 }
 
 @end

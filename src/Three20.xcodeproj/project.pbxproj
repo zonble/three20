@@ -102,6 +102,8 @@
 		6EEFB6C71162717F009B479E /* TTURLRequestModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EEFB6C61162717F009B479E /* TTURLRequestModel.h */; };
 		6EEFB6C911627188009B479E /* TTURLRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EEFB6C811627188009B479E /* TTURLRequestModel.m */; };
 		6EEFB6DE11627305009B479E /* TTModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EEFB6DD11627305009B479E /* TTModelDelegate.h */; };
+		6EC5AB4011380B300050F3C3 /* UILabelAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5AB3F11380B300050F3C3 /* UILabelAdditions.m */; };
+		6EC5AB4211380B3E0050F3C3 /* UILabelAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EC5AB4111380B3E0050F3C3 /* UILabelAdditions.h */; };
 		BE1288060F896A0A00F65EA2 /* TTStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1288050F896A0A00F65EA2 /* TTStyle.h */; };
 		BE1288080F896A1900F65EA2 /* TTStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BE1288070F896A1900F65EA2 /* TTStyle.m */; };
 		BE1288CB0F89812E00F65EA2 /* TTShape.m in Sources */ = {isa = PBXBuildFile; fileRef = BE1288CA0F89812E00F65EA2 /* TTShape.m */; };
@@ -407,6 +409,8 @@
 		6EEFB6C61162717F009B479E /* TTURLRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTURLRequestModel.h; path = Three20/TTURLRequestModel.h; sourceTree = "<group>"; };
 		6EEFB6C811627188009B479E /* TTURLRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTURLRequestModel.m; sourceTree = "<group>"; };
 		6EEFB6DD11627305009B479E /* TTModelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTModelDelegate.h; path = Three20/TTModelDelegate.h; sourceTree = "<group>"; };
+		6EC5AB3F11380B300050F3C3 /* UILabelAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILabelAdditions.m; sourceTree = "<group>"; };
+		6EC5AB4111380B3E0050F3C3 /* UILabelAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILabelAdditions.h; path = Three20/UILabelAdditions.h; sourceTree = "<group>"; };
 		BE1288050F896A0A00F65EA2 /* TTStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTStyle.h; path = Three20/TTStyle.h; sourceTree = "<group>"; };
 		BE1288070F896A1900F65EA2 /* TTStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTStyle.m; sourceTree = "<group>"; };
 		BE1288CA0F89812E00F65EA2 /* TTShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTShape.m; sourceTree = "<group>"; };
@@ -893,10 +897,10 @@
 				BE7EB6400F50D30C008A4B05 /* TTTableHeaderView.m */,
 				6E924D97112CAA4A00531F03 /* TTTableHeaderDragRefreshView.h */,
 				6E924D94112CAA3800531F03 /* TTTableHeaderDragRefreshView.m */,
-				BE6E4A530F465243001CE9B4 /* TTTableViewCell.h */,
-				BE6E4A510F465237001CE9B4 /* TTTableViewCell.m */,
 				BE702EFA0F43F9DC0028A119 /* TTTableItem.h */,
 				BE702EF80F43F9D20028A119 /* TTTableItem.m */,
+				BE6E4A530F465243001CE9B4 /* TTTableViewCell.h */,
+				BE6E4A510F465237001CE9B4 /* TTTableViewCell.m */,
 				BE702ED10F43F3390028A119 /* TTTableItemCell.h */,
 				BE702ECF0F43F32E0028A119 /* TTTableItemCell.m */,
 				BEF31F5B0F352E64000DE5D2 /* TTErrorView.h */,
@@ -1248,6 +1252,8 @@
 				BEAF211C0F4D329600D75F3B /* UIColorAdditions.m */,
 				BEA6B8E31013FC3400B83B3A /* UIFontAdditions.h */,
 				BEA6B8E51013FC4900B83B3A /* UIFontAdditions.m */,
+				6EC5AB4111380B3E0050F3C3 /* UILabelAdditions.h */,
+				6EC5AB3F11380B300050F3C3 /* UILabelAdditions.m */,
 				BEAF21370F4D32E100D75F3B /* UIImageAdditions.h */,
 				BEAF211D0F4D329600D75F3B /* UIImageAdditions.m */,
 				BEAF213A0F4D32E100D75F3B /* UIViewAdditions.h */,
@@ -1465,6 +1471,7 @@
 				6E94C98F1170037B0012B12C /* TTTabItem.h in Headers */,
 				6E94C991117003E60012B12C /* TTTabDelegate.h in Headers */,
 				6E94C9EF117006180012B12C /* TTTabBarInternal.h in Headers */,
+				6EC5AB4211380B3E0050F3C3 /* UILabelAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1684,6 +1691,7 @@
 				6E94C9851170030B0012B12C /* TTTab.m in Sources */,
 				6E94C98D117003730012B12C /* TTTabItem.m in Sources */,
 				6E94C9ED1170060B0012B12C /* TTTabBarInternal.m in Sources */,
+				6EC5AB4011380B300050F3C3 /* UILabelAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
