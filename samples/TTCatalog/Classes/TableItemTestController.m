@@ -62,13 +62,13 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
     self.title = @"Table Items";
     self.variableHeightRows = YES;
 
-    // Uncomment this to test fixed height rows.
-    //self.tableView.rowHeight = 120;
+    // Uncomment this to test fixed-height rows.
+    //self.tableView.rowHeight = 44;
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     // Uncomment this to see how the table looks with the grouped style
-    self.tableViewStyle = UITableViewStyleGrouped;
+    //self.tableViewStyle = UITableViewStyleGrouped;
     
     //self.tableViewSeparatorStyle = UITableViewCellSeparatorStyleNone;
 
@@ -78,6 +78,12 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
     NSString* localImage = @"bundle://tableIcon.png";
     NSString* remoteImage = @"http://profile.ak.fbcdn.net/v223/35/117/q223792_6978.jpg";
     UIImage* defaultPerson = TTIMAGE(@"bundle://defaultPerson.png");
+    TTStyle* imageStyle = 
+      [TTShapeStyle styleWithShape:[TTRectangleShape shape] next:
+      [TTSolidBorderStyle styleWithColor:[UIColor lightGrayColor] width:1 next:
+      [TTSolidFillStyle styleWithColor:[UIColor whiteColor] next:
+      [TTInsetStyle styleWithInset:UIEdgeInsetsMake(3, 3, 3, 3) next:
+      [TTContentStyle styleWithNext:nil]]]]];
     
     // This demonstrates how to create a table with standard table "fields".  Many of these
     // fields with URLs that will be visited when the row is selected
@@ -85,10 +91,16 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
       @"TTTableTitleItem",
       [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
         @"No URLs", kTableItemTitleKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
         nil]],
       [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
         @"URL", kTableItemTitleKey,
         @"tt://tableItemTest", kTableItemURLKey,
+        defaultPerson, kTableItemImageKey,
+        localImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
         nil]],
       [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
         @"accessoryURL", kTableItemTitleKey,
@@ -100,10 +112,137 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
         @"http://www.google.com", kTableItemAccessoryURLKey,
         nil]],
       [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Long text with no urls set at all so this should truncate or wrap", kTableItemTitleKey,
+        kLoremIpsum, kTableItemTitleKey,
+        defaultPerson, kTableItemImageKey,
+        imageStyle, kTableItemImageStyleKey,
         nil]],
       [TTTableTitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Long text with some urls set a", kTableItemTitleKey,
+        kLoremIpsum, kTableItemTitleKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+
+      @"TTTableSubtitleItem",
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"No URLs", kTableItemTitleKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Subtitle", kTableItemSubtitleKey,
+        nil]],
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"No URLs", kTableItemTitleKey,
+        @"Subtitle", kTableItemSubtitleKey,
+        nil]],
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"URL", kTableItemTitleKey,
+        @"This is a really long subtitle that should span a few lines or truncate", kTableItemSubtitleKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        nil]],
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"accessoryURL", kTableItemTitleKey,
+        @"Subtitle", kTableItemSubtitleKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        defaultPerson, kTableItemImageKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Both URLs", kTableItemTitleKey,
+        @"Subtitle", kTableItemSubtitleKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Long text with no urls set at all so this should truncate or wrap", kTableItemTitleKey,
+        @"This is a really long subtitle that should span a few lines or truncate", kTableItemSubtitleKey,
+        nil]],
+      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Long text with some urls set so this should truncate or wrap", kTableItemTitleKey,
+        @"This is a really long subtitle that should span more than two lines which is the default max number of lines for the subtitle item", kTableItemSubtitleKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+
+      @"TTTableMessageItem",
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Title", kTableItemTitleKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Subtitle", kTableItemSubtitleKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Text", kTableItemTextKey,
+        [NSDate date], kTableItemTimestampKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        kLoremIpsum, kTableItemSubtitleKey,
+        [NSDate date], kTableItemTimestampKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        kLoremIpsum, kTableItemTextKey,
+        [NSDate date], kTableItemTimestampKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Title", kTableItemTitleKey,
+        @"Subtitle", kTableItemSubtitleKey,
+        [NSDate date], kTableItemTimestampKey,
+        defaultPerson, kTableItemImageKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Title", kTableItemTitleKey,
+        @"Text", kTableItemTextKey,
+        remoteImage, kTableItemImageURLKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Subtitle", kTableItemSubtitleKey,
+        @"Text", kTableItemTextKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        kLoremIpsum, kTableItemTitleKey,
+        kLoremIpsum, kTableItemSubtitleKey,
+        kLoremIpsum, kTableItemTextKey,
+        [NSDate date], kTableItemTimestampKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        defaultPerson, kTableItemImageKey,
+        remoteImage, kTableItemImageURLKey,
+        imageStyle, kTableItemImageStyleKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        kLoremIpsum, kTableItemTitleKey,
+        @"Subtitle", kTableItemSubtitleKey,
+        kLoremIpsum, kTableItemTextKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"No subtitle", kTableItemTitleKey,
+        kLoremIpsum, kTableItemTextKey,
+        @"tt://tableItemTest", kTableItemURLKey,
+        @"http://www.google.com", kTableItemAccessoryURLKey,
+        nil]],
+      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
+        @"Bob Jones", kTableItemTitleKey,
+        @"TTTableMessageItem", kTableItemSubtitleKey,
+        [NSDate date], kTableItemTimestampKey,
+        kLoremIpsum, kTableItemTextKey,
         @"tt://tableItemTest", kTableItemURLKey,
         @"http://www.google.com", kTableItemAccessoryURLKey,
         nil]],
@@ -145,110 +284,6 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
         @"tt://tableItemTest", kTableItemURLKey,
         @"http://www.google.com", kTableItemAccessoryURLKey,
         nil]],
-
-      @"TTTableSubtitleItem",
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"No URLs", kTableItemTitleKey,
-        nil]],
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Subtitle", kTableItemSubtitleKey,
-        nil]],
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"No URLs", kTableItemTitleKey,
-        @"Subtitle", kTableItemSubtitleKey,
-        nil]],
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"URL", kTableItemTitleKey,
-        @"This is a really long subtitle that should span a few lines or truncate", kTableItemSubtitleKey,
-        @"tt://tableItemTest", kTableItemURLKey,
-        nil]],
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"accessoryURL", kTableItemTitleKey,
-        @"Subtitle", kTableItemSubtitleKey,
-        @"http://www.google.com", kTableItemAccessoryURLKey,
-        nil]],
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Both URLs", kTableItemTitleKey,
-        @"Subtitle", kTableItemSubtitleKey,
-        @"tt://tableItemTest", kTableItemURLKey,
-        @"http://www.google.com", kTableItemAccessoryURLKey,
-        nil]],
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Long text with no urls set at all so this should truncate or wrap", kTableItemTitleKey,
-        @"This is a really long subtitle that should span a few lines or truncate", kTableItemSubtitleKey,
-        nil]],
-      [TTTableSubtitleItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Long text with some urls set so this should truncate or wrap", kTableItemTitleKey,
-        @"This is a really long subtitle that should span more than two lines which is the default max number of lines for the subtitle item", kTableItemSubtitleKey,
-        @"tt://tableItemTest", kTableItemURLKey,
-        @"http://www.google.com", kTableItemAccessoryURLKey,
-        nil]],
-
-      @"TTTableMessageItem",
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Title", kTableItemTitleKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Subtitle", kTableItemSubtitleKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Text", kTableItemTextKey,
-        [NSDate date], kTableItemTimestampKey,
-        defaultPerson, kTableItemImageKey,
-        remoteImage, kTableItemImageURLKey,
-        imageStyle, kTableItemImageStyleKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        kLoremIpsum, kTableItemSubtitleKey,
-        [NSDate date], kTableItemTimestampKey,
-        defaultPerson, kTableItemImageKey,
-        remoteImage, kTableItemImageURLKey,
-        imageStyle, kTableItemImageStyleKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        kLoremIpsum, kTableItemTextKey,
-        [NSDate date], kTableItemTimestampKey,
-        defaultPerson, kTableItemImageKey,
-        remoteImage, kTableItemImageURLKey,
-        imageStyle, kTableItemImageStyleKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Title", kTableItemTitleKey,
-        @"Subtitle", kTableItemSubtitleKey,
-        [NSDate date], kTableItemTimestampKey,
-        defaultPerson, kTableItemImageKey,
-        imageStyle, kTableItemImageStyleKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Title", kTableItemTitleKey,
-        @"Text", kTableItemTextKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Subtitle", kTableItemSubtitleKey,
-        @"Text", kTableItemTextKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        kLoremIpsum, kTableItemTitleKey,
-        kLoremIpsum, kTableItemSubtitleKey,
-        kLoremIpsum, kTableItemTextKey,
-        [NSDate date], kTableItemTimestampKey,
-        @"tt://tableItemTest", kTableItemURLKey,
-        nil]],
-    /*  [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        kLoremIpsum, kTableItemTitleKey,
-        @"Subtitle", kTableItemSubtitleKey,
-        kLoremIpsum, kTableItemTextKey,
-        @"tt://tableItemTest", kTableItemURLKey,
-        @"http://www.google.com", kTableItemAccessoryURLKey,
-        nil]],
-      [TTTableMessageItem itemWithProperties:[NSDictionary dictionaryWithObjectsAndKeys:
-        @"Bob Jones", kTableItemTitleKey,
-        @"TTTableMessageItem", kTableItemSubtitleKey,
-        [NSDate date], kTableItemTimestampKey,
-        kLoremIpsum, kTableItemTextKey,
-        @"tt://tableItemTest", kTableItemURLKey,
-        @"http://www.google.com", kTableItemAccessoryURLKey,
-        nil]],*/
 
 /* TODO: CLEANUP      [TTTableLink itemWithText:@"TTTableLink" URL:@"tt://tableItemTest"],
       [TTTableButton itemWithText:@"TTTableButton"],
@@ -304,9 +339,9 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
   [self.tableView reloadData];
 }
-
+/*
 - (id<UITableViewDelegate>)createDelegate {
   return [[[TableViewVarHeightDelegate alloc] initWithController:self] autorelease];
-}
+}*/
 
 @end

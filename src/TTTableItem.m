@@ -27,8 +27,8 @@ NSString* kTableItemCaptionKey        = @"caption";
 NSString* kTableItemURLKey            = @"URL";
 NSString* kTableItemAccessoryURLKey   = @"accessoryURL";
 
+NSString* kTableItemImageKey          = @"image";
 NSString* kTableItemImageURLKey       = @"imageURL";
-NSString* kTableItemDefaultImageKey   = @"defaultImage";
 NSString* kTableItemImageStyleKey     = @"imageStyle";
 
 NSString* kTableItemTimestampKey      = @"timestamp";
@@ -73,8 +73,11 @@ NSString* kTableItemViewKey           = @"view";
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation TTTableLinkedItem
 
-@synthesize URL = _URL;
-@synthesize accessoryURL = _accessoryURL;
+@synthesize URL           = _URL;
+@synthesize accessoryURL  = _accessoryURL;
+@synthesize image         = _image;
+@synthesize imageURL      = _imageURL;
+@synthesize imageStyle    = _imageStyle;
 
 + (id)itemWithProperties:(NSDictionary*)properties {
   return [[[self alloc] initWithProperties:properties] autorelease];
@@ -87,6 +90,9 @@ NSString* kTableItemViewKey           = @"view";
   if( self = [super init] ) {
     self.URL          = [properties objectForKey:kTableItemURLKey];
     self.accessoryURL = [properties objectForKey:kTableItemAccessoryURLKey];
+    self.image        = [properties objectForKey:kTableItemImageKey];
+    self.imageURL     = [properties objectForKey:kTableItemImageURLKey];
+    self.imageStyle   = [properties objectForKey:kTableItemImageStyleKey];
   }
 
   return self;
@@ -95,6 +101,9 @@ NSString* kTableItemViewKey           = @"view";
 - (void)dealloc {
   TT_RELEASE_SAFELY(_URL);
   TT_RELEASE_SAFELY(_accessoryURL);
+  TT_RELEASE_SAFELY(_image);
+  TT_RELEASE_SAFELY(_imageURL);
+  TT_RELEASE_SAFELY(_imageStyle);
   [super dealloc];
 }
 
@@ -105,6 +114,7 @@ NSString* kTableItemViewKey           = @"view";
   if (self = [super initWithCoder:decoder]) {
     self.URL          = [decoder decodeObjectForKey:kTableItemURLKey];
     self.accessoryURL = [decoder decodeObjectForKey:kTableItemAccessoryURLKey];
+    self.imageURL     = [decoder decodeObjectForKey:kTableItemImageURLKey];
   }
   return self;
 }
@@ -116,6 +126,9 @@ NSString* kTableItemViewKey           = @"view";
   }
   if (nil != self.accessoryURL) {
     [encoder encodeObject:self.accessoryURL forKey:kTableItemAccessoryURLKey];
+  }
+  if (nil != self.imageURL) {
+    [encoder encodeObject:self.imageURL forKey:kTableItemImageURLKey];
   }
 }
 
@@ -164,58 +177,6 @@ NSString* kTableItemViewKey           = @"view";
   [super encodeWithCoder:encoder];
   if (self.title) {
     [encoder encodeObject:self.title forKey:kTableItemTitleKey];
-  }
-}
-
-@end
-
-
-#pragma mark -
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation TTTableCaptionItem
-
-@synthesize caption = _caption;
-
-+ (id)itemWithProperties:(NSDictionary*)properties {
-  return [[[self alloc] initWithProperties:properties] autorelease];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark NSObject
-
-- (id)initWithProperties:(NSDictionary*)properties {
-  if( self = [super initWithProperties:properties] ) {
-    self.caption = [properties objectForKey:kTableItemCaptionKey];
-  }
-
-  return self;
-}
-
-- (void)dealloc {
-  TT_RELEASE_SAFELY(_caption);
-  [super dealloc];
-}
-
--(Class)cellClass {
-  return [TTTableCaptionItemCell class];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark NSCoding
-
-- (id)initWithCoder:(NSCoder*)decoder {
-  if (self = [super initWithCoder:decoder]) {
-    self.caption = [decoder decodeObjectForKey:kTableItemCaptionKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder*)encoder {
-  [super encodeWithCoder:encoder];
-  if (self.caption) {
-    [encoder encodeObject:self.caption forKey:kTableItemCaptionKey];
   }
 }
 
@@ -332,14 +293,14 @@ NSString* kTableItemViewKey           = @"view";
 
 @end
 
-/* TODO: CLEANUP
+
 #pragma mark -
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation TTTableSubtextItem
+@implementation TTTableCaptionItem
 
-@synthesize text = _text;
+@synthesize caption = _caption;
 
 + (id)itemWithProperties:(NSDictionary*)properties {
   return [[[self alloc] initWithProperties:properties] autorelease];
@@ -350,19 +311,19 @@ NSString* kTableItemViewKey           = @"view";
 
 - (id)initWithProperties:(NSDictionary*)properties {
   if( self = [super initWithProperties:properties] ) {
-    self.text = [properties objectForKey:kTableItemTextKey];
+    self.caption = [properties objectForKey:kTableItemCaptionKey];
   }
 
   return self;
 }
 
 - (void)dealloc {
-  TT_RELEASE_SAFELY(_text);
+  TT_RELEASE_SAFELY(_caption);
   [super dealloc];
 }
 
 -(Class)cellClass {
-  return [TTTableSubtextItemCell class];
+  return [TTTableCaptionItemCell class];
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -370,21 +331,21 @@ NSString* kTableItemViewKey           = @"view";
 
 - (id)initWithCoder:(NSCoder*)decoder {
   if (self = [super initWithCoder:decoder]) {
-    self.text = [decoder decodeObjectForKey:kTableItemTextKey];
+    self.caption = [decoder decodeObjectForKey:kTableItemCaptionKey];
   }
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder*)encoder {
   [super encodeWithCoder:encoder];
-  if (self.text) {
-    [encoder encodeObject:self.text forKey:kTableItemTextKey];
+  if (self.caption) {
+    [encoder encodeObject:self.caption forKey:kTableItemCaptionKey];
   }
 }
 
 @end
 
-
+/* TODO: CLEANUP
 #pragma mark -
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
