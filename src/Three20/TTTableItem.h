@@ -210,9 +210,6 @@ extern NSString* kTableItemViewKey;
 @end
 
 
-/* TODO: CLEANUP
-*/
-#if 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @interface TTTableMessageItem : TTTableSubtitleItem {
 @private
@@ -240,6 +237,9 @@ extern NSString* kTableItemViewKey;
 @end
 
 
+/* TODO: CLEANUP
+*/
+#if 0
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @interface TTTableSubtextItem : TTTableTitleItem {
 @private
