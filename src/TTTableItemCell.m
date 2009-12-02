@@ -55,17 +55,23 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation TTTableLinkedItemCell
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NSObject
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
   TT_RELEASE_SAFELY(_item);
   [super dealloc];
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewCell
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)didMoveToSuperview {
   [super didMoveToSuperview];
   if (self.superview) {
@@ -73,6 +79,90 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   }
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)optimizeLabels: (NSArray*)labels
+               heights: (NSMutableArray*)calculatedLabelHeights {
+
+  static const NSInteger kMaxNumberOfLabels = 10;
+
+  TTDASSERT([labels count] == [calculatedLabelHeights count]);
+  TTDASSERT([labels count] < kMaxNumberOfLabels);
+  if ([labels count] >= kMaxNumberOfLabels) {
+    return;
+  }
+
+  CGFloat height = 0;
+
+  CGFloat labelHeights[kMaxNumberOfLabels];
+  CGFloat maxNumberOfLines[kMaxNumberOfLabels];
+
+  for (int ix = 0; ix < [calculatedLabelHeights count]; ++ix) {
+    labelHeights[ix] = [[calculatedLabelHeights objectAtIndex:ix] floatValue];
+    height += labelHeights[ix];
+    UILabel* label = [labels objectAtIndex:ix];
+    maxNumberOfLines[ix] = labelHeights[ix] / label.font.safeLineHeight;
+  }
+
+  const CGFloat paddedCellHeight =
+    self.contentView.height - TTSTYLEVAR(tableVPadding) * 2;
+
+  if (height > paddedCellHeight) {
+    NSInteger labelRowCounts[kMaxNumberOfLabels];
+    memset(labelRowCounts, 0, sizeof(NSInteger) * kMaxNumberOfLabels);
+    memset(labelHeights, 0, sizeof(CGFloat) * kMaxNumberOfLabels);
+
+    height = 0;
+
+    BOOL couldAddAny = YES;
+    while (couldAddAny) {
+      couldAddAny = NO;
+
+      for (int ix = 0; ix < [labels count]; ++ix) {
+        UILabel* label = [labels objectAtIndex:ix];
+
+        if (nil != label.text &&
+            (0 == label.numberOfLines && labelRowCounts[ix] < maxNumberOfLines[ix] ||
+            labelRowCounts[ix] < label.numberOfLines)) {
+          labelRowCounts[ix]++;
+          labelHeights[ix] = labelRowCounts[ix] * label.font.safeLineHeight;
+
+          height = 0;
+          for (int iy = 0; iy < [labels count]; ++iy) {
+            height += labelHeights[iy];
+          }
+
+          if (height > paddedCellHeight) {
+            labelRowCounts[ix]--;
+            labelHeights[ix] = labelRowCounts[ix] * label.font.safeLineHeight;
+          } else {
+            couldAddAny = YES;
+          }
+        }
+      }
+    }
+
+    BOOL anyRows = NO;
+    for (int ix = 0; ix < [labels count]; ++ix) {
+      if (labelRowCounts[ix] != 0) {
+        anyRows = YES;
+        break;
+      }
+    }
+
+    if (!anyRows) {
+      labelHeights[0] = paddedCellHeight;
+    }
+
+    [calculatedLabelHeights removeAllObjects];
+    for (int ix = 0; ix < [labels count]; ++ix) {
+      [calculatedLabelHeights addObject:[NSNumber numberWithFloat:labelHeights[ix]]];
+    }
+  }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)calculateContentWidthWithImageSize: (CGSize*)pImageSize
                                  imagePadding: (UIEdgeInsets*)pImagePadding {
   CGFloat contentWidth = self.contentView.width - TTSTYLEVAR(tableHPadding) * 2;
@@ -111,6 +201,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   return contentWidth;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)calculateContentWidthWithTableView: (UITableView*)tableView
                                     indexPath: (NSIndexPath*)indexPath
                                     imageSize: (CGSize*)pImageSize
@@ -135,10 +227,14 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   return contentWidth;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)object {
   return _item;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setObject:(id)object {
   if (_item != object) {
     // We've just ensured that _item != object, so a release/retain is fine here.
@@ -180,7 +276,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
     TT_RELEASE_SAFELY(_styledImageView);
 
     if (nil != _item.image ||
-        nil != _item.imageURL && !TTIsEmptyString(_item.imageURL)) {
+        TTIsStringWithAnyText(_item.imageURL)) {
       _styledImageView = [[TTImageView alloc] init];
       _styledImageView.defaultImage = _item.image;
       _styledImageView.URL          = _item.imageURL;
@@ -199,9 +295,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation TTTableTitleItemCell
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NSObject
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier {
   if (self = [super initWithStyle:style reuseIdentifier:identifier]) {
     self.textLabel.font                 = TTSTYLEVAR(tableTitleFont);
@@ -214,9 +313,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 	return self;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIView
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -230,7 +332,9 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   CGFloat imageWidth = imageSize.width + imagePadding.left + imagePadding.right;
 
   _styledImageView.frame =
-    CGRectMake(imagePadding.left, imagePadding.top,
+    CGRectMake(imagePadding.left,
+               floor(self.contentView.height -
+                     MIN(self.contentView.height, imageSize.height)) / 2,
                imageSize.width, imageSize.height);
 
   self.textLabel.frame =
@@ -239,9 +343,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                contentWidth, paddedCellHeight);
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewCell
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)rowHeightWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
   CGSize imageSize;
   UIEdgeInsets imagePadding;
@@ -256,6 +363,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
              height + TTSTYLEVAR(tableVPadding) * 2) + [tableView tableCellExtraHeight];
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setObject:(id)object {
   if (_item != object) {
     [super setObject:object];
@@ -274,9 +383,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @implementation TTTableSubtitleItemCell
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NSObject
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier {
   if (self = [super initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier]) {
     self.textLabel.font                 = TTSTYLEVAR(tableTitleFont);
@@ -296,13 +408,14 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 	return self;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIView
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)layoutSubviews {
   [super layoutSubviews];
-
-  const CGFloat paddedCellHeight = self.contentView.height - TTSTYLEVAR(tableVPadding) * 2;
 
   CGSize imageSize;
   UIEdgeInsets imagePadding;
@@ -314,62 +427,21 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   CGFloat titleHeight     = [self.textLabel heightWithWidth:contentWidth];
   CGFloat subtitleHeight  = [self.detailTextLabel heightWithWidth:contentWidth];
 
-  CGFloat height = titleHeight + subtitleHeight;
+  NSArray* labels = [[NSArray alloc] initWithObjects:
+    self.textLabel,
+    self.detailTextLabel,
+    nil];
+  NSMutableArray* labelHeights = [[NSMutableArray alloc] initWithObjects:
+    [NSNumber numberWithFloat:titleHeight],
+    [NSNumber numberWithFloat:subtitleHeight],
+    nil];
+  [self optimizeLabels:labels heights:labelHeights];
+  TT_RELEASE_SAFELY(labels);
 
-  if (height > paddedCellHeight) {
-    // Likely a fixed-height cell. Let's try to show as much as we can.
+  titleHeight = [[labelHeights objectAtIndex:0] floatValue];
+  subtitleHeight = [[labelHeights objectAtIndex:1] floatValue];
 
-    NSInteger titleRows = 0;
-    NSInteger subtitleRows = 0;
-
-    titleHeight     = 0;
-    subtitleHeight  = 0;
-
-    height = 0;
-
-    BOOL couldAddAny = YES;
-    while (couldAddAny) {
-      couldAddAny = NO;
-
-      if (nil != self.textLabel.text &&
-          (0 == self.textLabel.numberOfLines ||
-          titleRows < self.textLabel.numberOfLines)) {
-        titleRows++;
-        titleHeight = titleRows * self.textLabel.font.lineHeight;
-
-        height = titleHeight + subtitleHeight;
-        if (height > paddedCellHeight) {
-          titleRows--;
-          titleHeight = titleRows * self.textLabel.font.lineHeight;
-        } else {
-          couldAddAny = YES;
-        }
-      }
-
-      if (nil != self.detailTextLabel.text &&
-          (0 == self.detailTextLabel.numberOfLines ||
-           titleRows < self.detailTextLabel.numberOfLines)) {
-        subtitleRows++;
-        subtitleHeight = subtitleRows * self.detailTextLabel.font.lineHeight;
-
-        height = titleHeight + subtitleHeight;
-        if (height > paddedCellHeight) {
-          subtitleRows--;
-          subtitleHeight = subtitleRows * self.detailTextLabel.font.lineHeight;
-        } else {
-          couldAddAny = YES;
-        }
-      }
-    }
-
-    if (0 == subtitleRows && 0 == titleRows) {
-      // There's not enough room to show anything, so just show the title.
-      titleHeight = paddedCellHeight;
-      subtitleHeight = 0;
-    } else {
-      height = titleHeight + subtitleHeight;
-    }
-  }
+  TT_RELEASE_SAFELY(labelHeights);
 
   _styledImageView.frame =
     CGRectMake(imagePadding.left, imagePadding.top,
@@ -384,9 +456,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                contentWidth, subtitleHeight);
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewCell
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)rowHeightWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
   CGSize imageSize;
   UIEdgeInsets imagePadding;
@@ -403,6 +478,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
          [tableView tableCellExtraHeight];
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setObject:(id)object {
   if (_item != object) {
     [super setObject:object];
@@ -425,9 +502,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 @synthesize messageLabel    = _messageLabel;
 @synthesize timestampLabel  = _timestampLabel;
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NSObject
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier {
   if (self = [super initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier]) {
     _messageLabel = [[UILabel alloc] init];
@@ -464,19 +544,22 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 	return self;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
   TT_RELEASE_SAFELY(_messageLabel);
   TT_RELEASE_SAFELY(_timestampLabel);
 	[super dealloc];
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIView
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)layoutSubviews {
   [super layoutSubviews];
-
-  const CGFloat paddedCellHeight = self.contentView.height - TTSTYLEVAR(tableVPadding) * 2;
 
   CGSize imageSize;
   UIEdgeInsets imagePadding;
@@ -496,84 +579,24 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   CGFloat messageHeight   = [self.messageLabel heightWithWidth:contentWidth -
                               ((titleHeight > 0 || subtitleHeight > 0) ? 0 : timestampSize.width)];
 
-  CGFloat height = titleHeight + subtitleHeight + messageHeight;
+  NSArray* labels = [[NSArray alloc] initWithObjects:
+    self.textLabel,
+    self.detailTextLabel,
+    self.messageLabel,
+    nil];
+  NSMutableArray* labelHeights = [[NSMutableArray alloc] initWithObjects:
+    [NSNumber numberWithFloat:titleHeight],
+    [NSNumber numberWithFloat:subtitleHeight],
+    [NSNumber numberWithFloat:messageHeight],
+    nil];
+  [self optimizeLabels:labels heights:labelHeights];
+  TT_RELEASE_SAFELY(labels);
 
-  if (height > paddedCellHeight) {
-    // Likely a fixed-height cell. Let's try to show as much as we can.
+  titleHeight = [[labelHeights objectAtIndex:0] floatValue];
+  subtitleHeight = [[labelHeights objectAtIndex:1] floatValue];
+  messageHeight = [[labelHeights objectAtIndex:2] floatValue];
 
-    NSInteger titleRows = 0;
-    NSInteger subtitleRows = 0;
-    NSInteger messageRows = 0;
-
-    titleHeight     = 0;
-    subtitleHeight  = 0;
-    messageHeight   = 0;
-
-    height = 0;
-
-    BOOL couldAddAny = YES;
-    while (couldAddAny) {
-      couldAddAny = NO;
-
-      if (nil != self.textLabel.text &&
-          (0 == self.textLabel.numberOfLines ||
-          titleRows < self.textLabel.numberOfLines)) {
-        titleRows++;
-        titleHeight = titleRows * self.textLabel.font.lineHeight;
-
-        height = titleHeight + subtitleHeight + messageHeight;
-        if (height > paddedCellHeight) {
-          titleRows--;
-          titleHeight = titleRows * self.textLabel.font.lineHeight;
-        } else {
-          couldAddAny = YES;
-        }
-      }
-
-      if (nil != self.detailTextLabel.text &&
-          (0 == self.detailTextLabel.numberOfLines ||
-           titleRows < self.detailTextLabel.numberOfLines)) {
-        subtitleRows++;
-        subtitleHeight = subtitleRows * self.detailTextLabel.font.lineHeight;
-
-        height = titleHeight + subtitleHeight + messageHeight;
-        if (height > paddedCellHeight) {
-          subtitleRows--;
-          subtitleHeight = subtitleRows * self.detailTextLabel.font.lineHeight;
-        } else {
-          couldAddAny = YES;
-        }
-      }
-
-      if (nil != self.messageLabel.text &&
-          (0 == self.messageLabel.numberOfLines ||
-           titleRows < self.messageLabel.numberOfLines)) {
-        messageRows++;
-        messageHeight = messageRows * self.messageLabel.font.lineHeight;
-
-        height = titleHeight + subtitleHeight + messageHeight;
-        if (height > paddedCellHeight) {
-          messageRows--;
-          messageHeight = messageRows * self.messageLabel.font.lineHeight;
-        } else {
-          couldAddAny = YES;
-        }
-      }
-    }
-
-    if (0 == messageRows && 0 == subtitleRows && 0 == titleRows) {
-      // There's not enough room to show anything, so just show the title.
-      titleHeight = paddedCellHeight;
-      subtitleHeight = 0;
-      messageHeight = 0;
-    } else {
-      height = titleHeight + subtitleHeight + messageHeight;
-    }
-  }
-  self.textLabel.frame =
-    CGRectMake(imageWidth + TTSTYLEVAR(tableHPadding),
-               TTSTYLEVAR(tableVPadding),
-               contentWidth - timestampSize.width, titleHeight);
+  TT_RELEASE_SAFELY(labelHeights);
 
   _styledImageView.frame =
     CGRectMake(imagePadding.left, imagePadding.top,
@@ -597,6 +620,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                timestampSize.width, timestampSize.height);
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)didMoveToSuperview {
   [super didMoveToSuperview];
   if (self.superview) {
@@ -605,9 +630,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   }
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewCell
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)rowHeightWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
   CGSize imageSize;
   UIEdgeInsets imagePadding;
@@ -632,6 +660,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
     [tableView tableCellExtraHeight];
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setObject:(id)object {
   if (_item != object) {
     [super setObject:object];
@@ -656,6 +686,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark NSObject
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier {
   if (self = [super initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier]) {
     self.textLabel.font                      = TTSTYLEVAR(tableCaptionFont);
@@ -677,9 +709,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 	return self;
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark UIView
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)layoutSubviews {
   [super layoutSubviews];
 
@@ -700,9 +735,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                                           titleWidth, titleHeight);
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark TTTableViewCell
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)rowHeightWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
   CGFloat contentWidth = [self contentWidthWithTableView:tableView indexPath:indexPath];
 
@@ -716,6 +754,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
     [tableView tableCellExtraHeight];
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)setObject:(id)object {
   if (_item != object) {
     [super setObject:object];
@@ -724,13 +764,6 @@ static const CGFloat kDefaultMessageImageHeight = 34;
     self.textLabel.text = item.caption;
     self.detailTextLabel.text = item.title;
   }  
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-// public
-
-- (UILabel*)captionLabel {
-  return self.textLabel;
 }
 
 @end

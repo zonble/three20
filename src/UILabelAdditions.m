@@ -27,7 +27,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)heightWithWidth:(CGFloat)width {
-  CGFloat maxHeight = self.numberOfLines * self.font.lineHeight;
+  CGFloat maxHeight = self.numberOfLines * self.font.safeLineHeight;
   if (0 == maxHeight) {
     maxHeight = CGFLOAT_MAX;
   }
