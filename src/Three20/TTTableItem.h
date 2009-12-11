@@ -105,8 +105,10 @@ extern NSString* kTableItemViewKey;
 
 @property (nonatomic, retain) id userInfo;
 
-// Used to instantiate the cell object
-// By default returns [TTTableTextItemCell class]
+/**
+ * @return The class name used to instantiate the table view cell for this item.
+ * @default nil
+ */
 -(Class)cellClass;
 
 @end
@@ -122,10 +124,6 @@ extern NSString* kTableItemViewKey;
 @property(nonatomic,copy) NSString* URL;
 @property(nonatomic,copy) NSString* accessoryURL;
 
-+ (id)itemWithProperties:(NSDictionary*)properties;
-
-- (id)initWithProperties:(NSDictionary*)properties;
-
 @end
 
 
@@ -140,10 +138,6 @@ extern NSString* kTableItemViewKey;
 @property(nonatomic,retain) UIImage*  image;
 @property(nonatomic,copy)   NSString* imageURL;
 @property(nonatomic,retain) TTStyle*  imageStyle;
-
-+ (id)itemWithProperties:(NSDictionary*)properties;
-
-- (id)initWithProperties:(NSDictionary*)properties;
 
 @end
 
@@ -289,24 +283,31 @@ extern NSString* kTableItemViewKey;
 @end
 
 
-/* TODO: CLEANUP
-*/
-#if 0
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-@interface TTTableButton : TTTableTitleItem
+@interface TTTableButtonItem : TTTableLinkedItem {
+@private
+  NSString* _title;
+}
+
+@property(nonatomic,copy) NSString* title;
+
 /**
  * Properties:
  *
  * * kTableItemTitleKey
  * * kTableItemURLKey
  * * kTableItemAccessoryURLKey
- * * kTableItemImageKey
- * * kTableItemImageURLKey
- * * kTableItemImageStyleKey
  */
++ (id)itemWithProperties:(NSDictionary*)properties;
+
+- (id)initWithProperties:(NSDictionary*)properties;
+
 @end
+
+
+/* TODO: CLEANUP
+*/
+#if 0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
