@@ -117,13 +117,26 @@ extern NSString* kTableItemViewKey;
 @private
   NSString* _URL;
   NSString* _accessoryURL;
+}
+
+@property(nonatomic,copy) NSString* URL;
+@property(nonatomic,copy) NSString* accessoryURL;
+
++ (id)itemWithProperties:(NSDictionary*)properties;
+
+- (id)initWithProperties:(NSDictionary*)properties;
+
+@end
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+@interface TTTableImageLinkedItem : TTTableLinkedItem {
+@private
   UIImage*  _image;
   NSString* _imageURL;
   TTStyle*  _imageStyle;
 }
 
-@property(nonatomic,copy)   NSString* URL;
-@property(nonatomic,copy)   NSString* accessoryURL;
 @property(nonatomic,retain) UIImage*  image;
 @property(nonatomic,copy)   NSString* imageURL;
 @property(nonatomic,retain) TTStyle*  imageStyle;
@@ -136,7 +149,7 @@ extern NSString* kTableItemViewKey;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-@interface TTTableTitleItem : TTTableLinkedItem {
+@interface TTTableTitleItem : TTTableImageLinkedItem {
 @private
   NSString* _title;
 }
@@ -217,12 +230,14 @@ extern NSString* kTableItemViewKey;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-@interface TTTableCaptionItem : TTTableTitleItem {
+@interface TTTableCaptionItem : TTTableLinkedItem {
 @private
   NSString* _caption;
+  NSString* _title;
 }
 
 @property(nonatomic,copy) NSString* caption;
+@property(nonatomic,copy) NSString* title;
 
 /**
  * Properties:
