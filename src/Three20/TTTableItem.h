@@ -296,7 +296,6 @@ extern NSString* kTableItemViewKey;
  *
  * * kTableItemTitleKey
  * * kTableItemURLKey
- * * kTableItemAccessoryURLKey
  */
 + (id)itemWithProperties:(NSDictionary*)properties;
 
@@ -305,32 +304,31 @@ extern NSString* kTableItemViewKey;
 @end
 
 
-/* TODO: CLEANUP
-*/
-#if 0
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-@interface TTTableMoreButton : TTTableButton {
+@interface TTTableMoreButtonItem : TTTableButtonItem {
 @private
+  NSString* _subtitle;
   BOOL _isLoading;
   id<TTModel> _model;
 }
 
-@property (nonatomic) BOOL isLoading;
-@property (nonatomic, retain) id<TTModel> model;
+@property(nonatomic,copy) NSString* subtitle;
+@property(nonatomic) BOOL isLoading;
+@property(nonatomic,retain) id<TTModel> model;
 
 /**
  * Properties:
  *
  * * kTableItemTitleKey
+ * * kTableItemSubtitleKey
  * * kTableItemURLKey
- * * kTableItemAccessoryURLKey
- * * kTableItemImageKey
- * * kTableItemImageURLKey
- * * kTableItemImageStyleKey
  */
 @end
+
+
+/* TODO: CLEANUP
+*/
+#if 0
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
