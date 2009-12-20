@@ -21,33 +21,22 @@
 #import "Three20/TTTableItem.h"
 #import "Three20/TTImageView.h"
 #import "Three20/TTStyledTextLabel.h"
-#import "Three20/TTActivityLabel.h"
 #import "Three20/TTTextEditor.h"
 #import "Three20/TTURLMap.h"
 #import "Three20/TTNavigator.h"
-#import "Three20/TTURLCache.h"
 #import "Three20/TTTableStyleSheet.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-static const CGFloat kMargin = 10;
-static const CGFloat kCellBorderSize = 1;
 static const CGFloat kSmallMargin = 6;
 static const CGFloat kSpacing = 8;
 static const CGFloat kControlPadding = 8;
 static const CGFloat kDefaultTextViewLines = 5;
-static const CGFloat kMoreButtonMargin = 40;
 
 static const CGFloat kKeySpacing = 12;
 
 static const CGFloat kKeyWidth = 75;
 static const CGFloat kMaxLabelHeight = 2000;
-
-static const NSInteger kMessageTextLineCount = 2;
-
-static const CGFloat kDefaultImageSize = 50;
-static const CGFloat kDefaultMessageImageWidth = 34;
-static const CGFloat kDefaultMessageImageHeight = 34;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +52,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
   TT_RELEASE_SAFELY(_item);
-  [super dealloc];
+
+	[super dealloc];
 }
 
 
@@ -73,10 +63,9 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)contentWidthWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
-  CGFloat padding = [self.styleSheet paddingH];
   return [self contentWidthWithTableView: tableView
                                indexPath: indexPath
-                                 padding: UIEdgeInsetsMake(padding, padding, padding, padding)];
+                                 padding: self.styleSheet.padding];
 }
 
 
@@ -119,7 +108,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
     // Any URL can be tapped and accessed.
     if (nil != item.urlPath) {
-      self.selectionStyle = [self.styleSheet selectionStyle];
+      self.selectionStyle = self.styleSheet.selectionStyle;
     } else {
       self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -147,6 +136,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)dealloc {
   TT_RELEASE_SAFELY(_styledImageView);
+
 	[super dealloc];
 }
 
@@ -165,20 +155,51 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark TTTableViewCell
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (CGFloat)contentWidthWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
+  TTTableImageLinkedItem* imageItem = (TTTableImageLinkedItem*)_item;
+
+  UIEdgeInsets cellPadding = self.styleSheet.padding;
+  UIEdgeInsets imagePadding = self.styleSheet.imagePadding;
+
+  UIEdgeInsets padding = UIEdgeInsetsMake(
+    cellPadding.top,
+    imageItem.imageRightAligned ? imagePadding.left : cellPadding.left,
+    cellPadding.bottom,
+    imageItem.imageRightAligned ? cellPadding.right : imagePadding.right);
+  return [self contentWidthWithTableView: tableView
+                               indexPath: indexPath
+                                 padding: padding];
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)calculateContentWidthWithImageSize: (CGSize*)pImageSize
                                  imagePadding: (UIEdgeInsets*)pImagePadding {
-  CGFloat contentWidth = self.contentView.width - [self.styleSheet paddingH] * 2;
+  UIEdgeInsets padding = self.styleSheet.padding;
+  CGFloat contentWidth = self.contentView.width;
 
   CGSize imageSize;
   UIEdgeInsets imagePadding;
 
   if (nil != _styledImageView) {
-    imageSize = [self.styleSheet imageSize];
-    imagePadding = [self.styleSheet imagePadding];
+    imageSize     = self.styleSheet.imageSize;
+    imagePadding  = self.styleSheet.imagePadding;
     contentWidth -= imageSize.width + imagePadding.left + imagePadding.right;
+
+    TTTableImageLinkedItem* imageItem = (TTTableImageLinkedItem*)_item;
+    if (imageItem.imageRightAligned) {
+      contentWidth -= self.styleSheet.padding.left;
+    } else {
+      contentWidth -= self.styleSheet.padding.right;
+    }
 
     CGFloat imageHeight = imageSize.height + imagePadding.top + imagePadding.bottom;
 
+    // Is the image too tall for this cell?
     if (imageHeight > self.contentView.height) {
       CGFloat percScale = self.contentView.height / imageHeight;
       CGSize originalSize = imageSize;
@@ -192,9 +213,11 @@ static const CGFloat kDefaultMessageImageHeight = 34;
       imagePadding.left += floor(xDelta);
       imagePadding.right += ceil(xDelta);
     }
+
   } else {
-    imageSize = CGSizeZero;
-    imagePadding = UIEdgeInsetsZero;
+    contentWidth -= (padding.left + padding.right);
+    imageSize     = CGSizeZero;
+    imagePadding  = UIEdgeInsetsZero;
   }
 
   *pImageSize = imageSize;
@@ -215,12 +238,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   UIEdgeInsets imagePadding;
 
   if (nil != _styledImageView) {
-    imageSize = [self.styleSheet imageSize];
-    imagePadding = [self.styleSheet imagePadding];
+    imageSize     = self.styleSheet.imageSize;
+    imagePadding  = self.styleSheet.imagePadding;
     contentWidth -= imageSize.width + imagePadding.left + imagePadding.right;
   } else {
-    imageSize = CGSizeZero;
-    imagePadding = UIEdgeInsetsZero;
+    imageSize     = CGSizeZero;
+    imagePadding  = UIEdgeInsetsZero;
   }
 
   *pImageSize = imageSize;
@@ -268,12 +291,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)optimizeLabels: (NSArray*)labels
                heights: (NSMutableArray*)calculatedLabelHeights {
-  UIEdgeInsets padding = UIEdgeInsetsMake(
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH],
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH]);
-  [self optimizeLabels:labels heights:calculatedLabelHeights padding:padding];
+  [self optimizeLabels:labels heights:calculatedLabelHeights padding:self.styleSheet.padding];
 }
 
 
@@ -281,8 +299,9 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  const CGFloat paddedCellHeight = self.contentView.height - [self.styleSheet paddingV] * 2;
-
+  UIEdgeInsets padding = self.styleSheet.padding;
+  const CGFloat paddedCellHeight = self.contentView.height - padding.top - padding.bottom;
+ 
   CGSize imageSize;
   UIEdgeInsets imagePadding;
   CGFloat contentWidth = [self
@@ -293,17 +312,16 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   BOOL isImageRightAligned = ((TTTableImageLinkedItem*)_item).imageRightAligned;
 
   _styledImageView.frame =
-    CGRectMake((isImageRightAligned ?
-        (self.contentView.width - imagePadding.right - imageSize.width) :
-        imagePadding.left),
-      floor(self.contentView.height -
-            MIN(self.contentView.height, imageSize.height)) / 2,
+    CGRectMake((isImageRightAligned
+        ? (self.contentView.width - imagePadding.right - imageSize.width)
+        : imagePadding.left),
+      floor(self.contentView.height
+            - MIN(self.contentView.height, imageSize.height)) / 2,
       imageSize.width, imageSize.height);
 
   self.textLabel.frame =
-    CGRectMake((isImageRightAligned ? 0 : imageWidth) + [self.styleSheet paddingH],
-               [self.styleSheet paddingV],
-               contentWidth, paddedCellHeight);
+    CGRectMake((isImageRightAligned ? padding.left : imageWidth),
+               padding.top, contentWidth, paddedCellHeight);
 }
 
 
@@ -323,7 +341,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
   CGFloat height = [self.textLabel heightWithWidth:contentWidth];
   return MAX(imageSize.height + imagePadding.top + imagePadding.bottom,
-             height + [self.styleSheet paddingV] * 2) + [tableView tableCellExtraHeight];
+             height + self.styleSheet.padding.top + self.styleSheet.padding.bottom)
+         + [tableView tableCellExtraHeight];
 }
 
 
@@ -380,12 +399,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)optimizeLabels: (NSArray*)labels
                heights: (NSMutableArray*)calculatedLabelHeights {
-  UIEdgeInsets padding = UIEdgeInsetsMake(
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH],
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH]);
-  [self optimizeLabels:labels heights:calculatedLabelHeights padding:padding];
+  [self optimizeLabels:labels heights:calculatedLabelHeights padding:self.styleSheet.padding];
 }
 
 
@@ -424,11 +438,12 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                imageSize.width, imageSize.height);
 
   self.textLabel.frame =
-    CGRectMake(imageWidth + [self.styleSheet paddingH], [self.styleSheet paddingV],
+    CGRectMake(imageWidth + self.styleSheet.padding.left, self.styleSheet.padding.top,
                contentWidth, titleHeight);
 
   self.detailTextLabel.frame =
-    CGRectMake(imageWidth + [self.styleSheet paddingH], [self.styleSheet paddingV] + titleHeight,
+    CGRectMake(imageWidth + self.styleSheet.padding.left,
+               self.styleSheet.padding.top + titleHeight,
                contentWidth, subtitleHeight);
 }
 
@@ -450,7 +465,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   CGFloat titleHeight = [self.textLabel heightWithWidth:contentWidth];
   CGFloat subtitleHeight = [self.detailTextLabel heightWithWidth:contentWidth];
   return MAX(imageSize.height + imagePadding.top + imagePadding.bottom,
-             titleHeight + subtitleHeight + [self.styleSheet paddingV] * 2) +
+             titleHeight + subtitleHeight
+             + self.styleSheet.padding.top + self.styleSheet.padding.bottom) +
          [tableView tableCellExtraHeight];
 }
 
@@ -520,6 +536,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)dealloc {
   TT_RELEASE_SAFELY(_messageLabel);
   TT_RELEASE_SAFELY(_timestampLabel);
+
 	[super dealloc];
 }
 
@@ -531,12 +548,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)optimizeLabels: (NSArray*)labels
                heights: (NSMutableArray*)calculatedLabelHeights {
-  UIEdgeInsets padding = UIEdgeInsetsMake(
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH],
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH]);
-  [self optimizeLabels:labels heights:calculatedLabelHeights padding:padding];
+  [self optimizeLabels:labels heights:calculatedLabelHeights padding:self.styleSheet.padding];
 }
 
 
@@ -586,25 +598,25 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                imageSize.width, imageSize.height);
 
   self.textLabel.frame =
-    CGRectMake(imageWidth + [self.styleSheet paddingH],
-               [self.styleSheet paddingV],
+    CGRectMake(imageWidth + self.styleSheet.padding.left,
+               self.styleSheet.padding.top,
                contentWidth - timestampSize.width, titleHeight);
 
   self.detailTextLabel.frame =
-    CGRectMake(imageWidth + [self.styleSheet paddingH],
-               [self.styleSheet paddingV] + titleHeight,
+    CGRectMake(imageWidth + self.styleSheet.padding.left,
+               self.styleSheet.padding.top + titleHeight,
                contentWidth - ((titleHeight > 0) ? 0 : timestampSize.width), subtitleHeight);
 
   self.messageLabel.frame =
-    CGRectMake(imageWidth + [self.styleSheet paddingH],
-               [self.styleSheet paddingV] + titleHeight + subtitleHeight,
+    CGRectMake(imageWidth + self.styleSheet.padding.left,
+               self.styleSheet.padding.top + titleHeight + subtitleHeight,
                contentWidth - ((titleHeight > 0 || subtitleHeight > 0) ? 0 : timestampSize.width),
                messageHeight);
 
-  CGFloat entireContentWidth = imageWidth + [self.styleSheet paddingH] + contentWidth;
+  CGFloat entireContentWidth = imageWidth + self.styleSheet.padding.left + contentWidth;
   self.timestampLabel.frame =
     CGRectMake(entireContentWidth - timestampSize.width,
-               [self.styleSheet paddingV],
+               self.styleSheet.padding.top,
                timestampSize.width, timestampSize.height);
 }
 
@@ -643,9 +655,11 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                               ((titleHeight > 0) ? 0 : timestampSize.width)];
   CGFloat messageHeight   = [self.messageLabel heightWithWidth:contentWidth -
                               ((titleHeight > 0 || subtitleHeight > 0) ? 0 : timestampSize.width)];
-  return MAX(imageSize.height + imagePadding.top + imagePadding.bottom,
-             titleHeight + subtitleHeight + messageHeight + [self.styleSheet paddingV] * 2) +
-    [tableView tableCellExtraHeight];
+  return
+    MAX(imageSize.height + imagePadding.top + imagePadding.bottom,
+        titleHeight + subtitleHeight + messageHeight
+        + (self.styleSheet.padding.top + self.styleSheet.padding.bottom))
+    + [tableView tableCellExtraHeight];
 }
 
 
@@ -675,7 +689,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
       self.detailTextLabel.font                 = [self.styleSheet subtitleFont];
       self.detailTextLabel.textColor            = [self.styleSheet messageSubtitleColor];
-      self.detailTextLabel.highlightedTextColor = [self.styleSheet messageSubtitleHighlightedColor];
+      self.detailTextLabel.highlightedTextColor =
+        [self.styleSheet messageSubtitleHighlightedColor];
       self.detailTextLabel.lineBreakMode        = [self.styleSheet subtitleLineBreakMode];
       self.detailTextLabel.numberOfLines        = [self.styleSheet subtitleNumberOfLines];
       self.detailTextLabel.textAlignment        = [self.styleSheet subtitleTextAlignment];
@@ -732,19 +747,29 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
   CGFloat captionWidth = kKeyWidth;
   CGFloat captionHeight = MIN(
-    self.contentView.height - [self.styleSheet paddingV] * 2,
+    self.contentView.height - (self.styleSheet.padding.top + self.styleSheet.padding.bottom),
     [self.textLabel heightWithWidth:captionWidth]);
 
-  CGFloat titleWidth = self.contentView.width - (kKeyWidth + kKeySpacing + [self.styleSheet paddingH] * 2);
+  CGFloat titleWidth = self.contentView.width
+    - (kKeyWidth + kKeySpacing + self.styleSheet.padding.left + self.styleSheet.padding.right);
   CGFloat titleHeight = MIN(
-    self.contentView.height - [self.styleSheet paddingV] * 2,
+    self.contentView.height - (self.styleSheet.padding.top + self.styleSheet.padding.bottom),
     [self.detailTextLabel heightWithWidth:titleWidth]);
 
-  self.textLabel.frame = CGRectMake([self.styleSheet paddingH], [self.styleSheet paddingV],
-                                    captionWidth, captionHeight);
+  // We want to align the baseline of the caption and the title, so we calculate
+  // the difference in ascender heights and offset one or the other such that they align.
+  CGFloat fontCapHeightDifference =
+    self.detailTextLabel.font.ascender - self.textLabel.font.ascender;
 
-  self.detailTextLabel.frame = CGRectMake([self.styleSheet paddingH] + kKeyWidth + kKeySpacing, [self.styleSheet paddingV],
-                                          titleWidth, titleHeight);
+  self.textLabel.frame = CGRectMake(
+    self.styleSheet.padding.left,
+    ceil(self.styleSheet.padding.top + MAX(0, fontCapHeightDifference)),
+    captionWidth, captionHeight);
+
+  self.detailTextLabel.frame = CGRectMake(
+    self.styleSheet.padding.left + kKeyWidth + kKeySpacing,
+    ceil(self.styleSheet.padding.top + MAX(0, -fontCapHeightDifference)),
+    titleWidth, titleHeight);
 }
 
 
@@ -762,8 +787,9 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   CGFloat titleWidth = contentWidth - (kKeyWidth + kKeySpacing);
   CGFloat titleHeight = [self.detailTextLabel heightWithWidth:titleWidth];
 
-  return MAX(captionHeight, titleHeight) + [self.styleSheet paddingV] * 2 +
-    [tableView tableCellExtraHeight];
+  return MAX(captionHeight, titleHeight)
+    + (self.styleSheet.padding.top + self.styleSheet.padding.bottom)
+    + [tableView tableCellExtraHeight];
 }
 
 
@@ -786,7 +812,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
       self.textLabel.lineBreakMode             = [self.styleSheet captionLineBreakMode];
       self.textLabel.numberOfLines             = [self.styleSheet captionNumberOfLines];
       self.textLabel.textAlignment             = [self.styleSheet captionTextAlignment];
-      self.textLabel.adjustsFontSizeToFitWidth = [self.styleSheet captionAdjustsFontSizeToFitWidth];
+      self.textLabel.adjustsFontSizeToFitWidth =
+        [self.styleSheet captionAdjustsFontSizeToFitWidth];
       self.textLabel.minimumFontSize           = [self.styleSheet captionMinimumFontSize];
 
       TTDASSERT(nil != self.styleSheet.captionTitleFont);
@@ -819,12 +846,14 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  const CGFloat paddedCellHeight = self.contentView.height - [self.styleSheet paddingV] * 2;
+  const CGFloat paddedCellHeight = self.contentView.height
+    - (self.styleSheet.padding.top + self.styleSheet.padding.bottom);
 
-  CGFloat contentWidth = self.contentView.width - [self.styleSheet paddingH] * 2;
+  CGFloat contentWidth = self.contentView.width
+    - self.styleSheet.padding.left - self.styleSheet.padding.right;
 
   self.textLabel.frame =
-    CGRectMake([self.styleSheet paddingH], [self.styleSheet paddingV],
+    CGRectMake(self.styleSheet.padding.left, self.styleSheet.padding.top,
                contentWidth, paddedCellHeight);
 }
 
@@ -835,7 +864,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)contentWidthWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
-  CGFloat padding = [self.styleSheet paddingH];
+  CGFloat padding = self.styleSheet.padding.left;
   return [self contentWidthWithTableView: tableView
                                indexPath: indexPath
                                  padding: UIEdgeInsetsMake(padding, padding, padding, padding)];
@@ -846,7 +875,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (CGFloat)rowHeightWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
   CGFloat contentWidth = [self contentWidthWithTableView:tableView indexPath:indexPath];
   CGFloat height = [self.textLabel heightWithWidth:contentWidth];
-  return height + [self.styleSheet paddingV] * 2 + [tableView tableCellExtraHeight];
+  return height + (self.styleSheet.padding.top + self.styleSheet.padding.bottom)
+    + [tableView tableCellExtraHeight];
 }
 
 
@@ -878,7 +908,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
       self.textLabel.lineBreakMode             = [self.styleSheet summaryLineBreakMode];
       self.textLabel.numberOfLines             = [self.styleSheet summaryNumberOfLines];
       self.textLabel.textAlignment             = [self.styleSheet summaryTextAlignment];
-      self.textLabel.adjustsFontSizeToFitWidth = [self.styleSheet summaryAdjustsFontSizeToFitWidth];
+      self.textLabel.adjustsFontSizeToFitWidth =
+        [self.styleSheet summaryAdjustsFontSizeToFitWidth];
       self.textLabel.minimumFontSize           = [self.styleSheet summaryMinimumFontSize];
     }
   }  
@@ -902,7 +933,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  const CGFloat paddedCellHeight = self.contentView.height - [self.styleSheet paddingV] * 2;
+  const CGFloat paddedCellHeight = self.contentView.height
+    - (self.styleSheet.padding.top + self.styleSheet.padding.bottom);
 
   CGSize imageSize;
   UIEdgeInsets imagePadding;
@@ -918,8 +950,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                imageSize.width, imageSize.height);
 
   self.textLabel.frame =
-    CGRectMake(imageWidth + [self.styleSheet paddingH],
-               [self.styleSheet paddingV],
+    CGRectMake(imageWidth + self.styleSheet.padding.left,
+               self.styleSheet.padding.top,
                contentWidth, paddedCellHeight);
 }
 
@@ -940,7 +972,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
   CGFloat height = [self.textLabel heightWithWidth:contentWidth];
   return MAX(imageSize.height + imagePadding.top + imagePadding.bottom,
-             height + [self.styleSheet paddingV] * 2) + [tableView tableCellExtraHeight];
+             height + (self.styleSheet.padding.top + self.styleSheet.padding.bottom))
+         + [tableView tableCellExtraHeight];
 }
 
 
@@ -984,11 +1017,13 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  const CGFloat paddedCellHeight = self.contentView.height - [self.styleSheet paddingV] * 2;
-  CGFloat contentWidth = self.contentView.width - [self.styleSheet paddingH] * 2;
+  const CGFloat paddedCellHeight = self.contentView.height
+    - (self.styleSheet.padding.top + self.styleSheet.padding.bottom);
+  CGFloat contentWidth = self.contentView.width
+    - self.styleSheet.padding.left - self.styleSheet.padding.right;
 
   self.textLabel.frame =
-    CGRectMake([self.styleSheet paddingH], [self.styleSheet paddingV],
+    CGRectMake(self.styleSheet.padding.left, self.styleSheet.padding.top,
                contentWidth, paddedCellHeight);
 }
 
@@ -1001,7 +1036,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (CGFloat)rowHeightWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
   CGFloat contentWidth = [self contentWidthWithTableView:tableView indexPath:indexPath];
   CGFloat height = [self.textLabel heightWithWidth:contentWidth];
-  return height + [self.styleSheet paddingV] * 2 + [tableView tableCellExtraHeight];
+  return height + (self.styleSheet.padding.top + self.styleSheet.padding.bottom)
+    + [tableView tableCellExtraHeight];
 }
 
 
@@ -1078,10 +1114,10 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)optimizeLabels: (NSArray*)labels
                heights: (NSMutableArray*)calculatedLabelHeights {
   UIEdgeInsets padding = UIEdgeInsetsMake(
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH],
-    [self.styleSheet paddingV],
-    [self.styleSheet paddingH]);
+    self.styleSheet.padding.top,
+    self.styleSheet.padding.left,
+    self.styleSheet.padding.top,
+    self.styleSheet.padding.left);
   [self optimizeLabels:labels heights:calculatedLabelHeights padding:padding];
 }
 
@@ -1090,9 +1126,10 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  CGFloat contentWidth = self.contentView.width - [self.styleSheet paddingH] * 2;
+  CGFloat contentWidth = self.contentView.width
+    - self.styleSheet.padding.left - self.styleSheet.padding.right;
   CGFloat textContentWidth =
-    contentWidth - self.activityIndicatorView.width - [self.styleSheet paddingH];
+    contentWidth - self.activityIndicatorView.width - self.styleSheet.padding.left;
 
   CGFloat titleHeight     = [self.textLabel heightWithWidth:textContentWidth];
   CGFloat subtitleHeight  = [self.detailTextLabel heightWithWidth:textContentWidth];
@@ -1113,19 +1150,19 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
   TT_RELEASE_SAFELY(labelHeights);
 
-  self.activityIndicatorView.left = [self.styleSheet paddingH];
+  self.activityIndicatorView.left = self.styleSheet.padding.left;
   self.activityIndicatorView.top =
     floor((self.contentView.height - self.activityIndicatorView.height) / 2);
 
   CGFloat centeredYOffset = floor((self.contentView.height - (titleHeight + subtitleHeight)) / 2);
 
   self.textLabel.frame =
-    CGRectMake(self.activityIndicatorView.right + [self.styleSheet paddingH],
+    CGRectMake(self.activityIndicatorView.right + self.styleSheet.padding.left,
                centeredYOffset,
                textContentWidth, titleHeight);
 
   self.detailTextLabel.frame =
-    CGRectMake(self.activityIndicatorView.right + [self.styleSheet paddingH],
+    CGRectMake(self.activityIndicatorView.right + self.styleSheet.padding.left,
                centeredYOffset + titleHeight,
                textContentWidth, subtitleHeight);
 }
@@ -1137,7 +1174,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)contentWidthWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
-  CGFloat padding = [self.styleSheet paddingH];
+  CGFloat padding = self.styleSheet.padding.left;
   return [self contentWidthWithTableView: tableView
                                indexPath: indexPath
                                  padding: UIEdgeInsetsMake(padding, padding, padding, padding)];
@@ -1148,13 +1185,13 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (CGFloat)rowHeightWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
   CGFloat contentWidth = [self contentWidthWithTableView:tableView indexPath:indexPath];
   CGFloat textContentWidth =
-    contentWidth - self.activityIndicatorView.width - [self.styleSheet paddingH];
+    contentWidth - self.activityIndicatorView.width - self.styleSheet.padding.left;
 
   CGFloat titleHeight = [self.textLabel heightWithWidth:textContentWidth];
   CGFloat subtitleHeight = [self.detailTextLabel heightWithWidth:textContentWidth];
   return MAX(self.activityIndicatorView.height,
              MAX(TT_ROW_HEIGHT * 3/2, titleHeight + subtitleHeight)) +
-         [self.styleSheet paddingV] * 2 +
+         (self.styleSheet.padding.top + self.styleSheet.padding.bottom) +
          [tableView tableCellExtraHeight];
 }
 
@@ -1189,10 +1226,14 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
       self.detailTextLabel.font                 = [self.styleSheet moreButtonSubtitleFont];
       self.detailTextLabel.textColor            = [self.styleSheet moreButtonSubtitleColor];
-      self.detailTextLabel.highlightedTextColor = [self.styleSheet moreButtonSubtitleHighlightedColor];
-      self.detailTextLabel.lineBreakMode        = [self.styleSheet moreButtonSubtitleLineBreakMode];
-      self.detailTextLabel.numberOfLines        = [self.styleSheet moreButtonSubtitleNumberOfLines];
-      self.detailTextLabel.textAlignment        = [self.styleSheet moreButtonSubtitleTextAlignment];
+      self.detailTextLabel.highlightedTextColor =
+        [self.styleSheet moreButtonSubtitleHighlightedColor];
+      self.detailTextLabel.lineBreakMode        =
+        [self.styleSheet moreButtonSubtitleLineBreakMode];
+      self.detailTextLabel.numberOfLines        =
+        [self.styleSheet moreButtonSubtitleNumberOfLines];
+      self.detailTextLabel.textAlignment        =
+        [self.styleSheet moreButtonSubtitleTextAlignment];
     }
   }  
 }
@@ -1255,7 +1296,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   [self.activityLabel sizeToFit];
   return
     self.activityLabel.height +
-    [self.styleSheet paddingV] * 2 + [tableView tableCellExtraHeight];
+    (self.styleSheet.padding.top + self.styleSheet.padding.bottom)
+    + [tableView tableCellExtraHeight];
 }
 
 
@@ -1282,7 +1324,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
       [_activityLabel removeFromSuperview];
       TT_RELEASE_SAFELY(_activityLabel);
-      _activityLabel = [[TTActivityLabel alloc] initWithStyle:[self.styleSheet activityLabelStyle]];
+      _activityLabel = [[TTActivityLabel alloc]
+        initWithStyle:[self.styleSheet activityLabelStyle]];
       [self.contentView addSubview:_activityLabel];
 
       self.activityLabel.text = item.title;
@@ -1486,7 +1529,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                                 contentWidth, _control.height);
   }
 
-  CGFloat contentWidth = self.contentView.width - [self.styleSheet paddingH] * 2;
+  CGFloat contentWidth = self.contentView.width
+    - self.styleSheet.padding.left - self.styleSheet.padding.right;
   CGFloat textContentWidth = contentWidth - _control.width;
 
   if (![TTTableControlItemCell shouldRespectControlPadding:_control]) {
@@ -1496,7 +1540,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   CGFloat titleHeight = [self.textLabel heightWithWidth:textContentWidth];
 
   self.textLabel.frame =
-    CGRectMake([self.styleSheet paddingH], floor((self.contentView.height - titleHeight) / 2),
+    CGRectMake(self.styleSheet.padding.left, floor((self.contentView.height - titleHeight) / 2),
                textContentWidth, titleHeight);
 }
 
@@ -1506,7 +1550,7 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)contentWidthWithTableView:(UITableView*)tableView indexPath:(NSIndexPath*)indexPath {
-  CGFloat padding = [self.styleSheet paddingH];
+  CGFloat padding = self.styleSheet.padding.left;
   return [self contentWidthWithTableView: tableView
                                indexPath: indexPath
                                  padding: UIEdgeInsetsMake(padding, padding, padding, padding)];
@@ -1553,8 +1597,10 @@ static const CGFloat kDefaultMessageImageHeight = 34;
   } else {
     titleHeight = [self.textLabel heightWithWidth:textContentWidth];
   }
-  return MAX(TT_ROW_HEIGHT, MAX(titleHeight, height) + [self.styleSheet paddingV] * 2) +
-         [tableView tableCellExtraHeight];
+  return
+    MAX(TT_ROW_HEIGHT, MAX(titleHeight, height)
+    + (self.styleSheet.padding.top + self.styleSheet.padding.bottom))
+    + [tableView tableCellExtraHeight];
 }
 
 
@@ -1604,7 +1650,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
-  const CGFloat paddedCellHeight = self.contentView.height - [self.styleSheet paddingV] * 2;
+  const CGFloat paddedCellHeight = self.contentView.height
+    - (self.styleSheet.padding.top + self.styleSheet.padding.bottom);
 
   CGSize imageSize;
   UIEdgeInsets imagePadding;
@@ -1620,8 +1667,8 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                imageSize.width, imageSize.height);
 
   self.textLabel.frame =
-    CGRectMake(imageWidth + [self.styleSheet paddingH],
-               [self.styleSheet paddingV],
+    CGRectMake(imageWidth + self.styleSheet.padding.left,
+               self.styleSheet.padding.top,
                contentWidth, paddedCellHeight);
 }
 
@@ -1641,8 +1688,10 @@ static const CGFloat kDefaultMessageImageHeight = 34;
                           imagePadding: &imagePadding];
 
   CGFloat height = [self.textLabel heightWithWidth:contentWidth];
-  return MAX(imageSize.height + imagePadding.top + imagePadding.bottom,
-             height + [self.styleSheet paddingV] * 2) + [tableView tableCellExtraHeight];
+  return
+    MAX(imageSize.height + imagePadding.top + imagePadding.bottom,
+        height + (self.styleSheet.padding.top + self.styleSheet.padding.bottom))
+    + [tableView tableCellExtraHeight];
 }
 
 
