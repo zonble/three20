@@ -14,37 +14,14 @@
 // limitations under the License.
 //
 
-#import "RootMenuController.h"
-
-#import "Atlas.h"
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation RootMenuController
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)init {
-  if (self = [super init]) {
-    self.title = @"Table Catalog";
-
-    self.dataSource = [TTSectionedDataSource dataSourceWithObjects:
-      @"",
-      [[[TTTableTitleItem item]
-        applyTitle:@"Item Catalog"]
-        applyURLPath:kItemCatalogURLPath],
-      nil];
-  }
-  return self;
+@interface ScalableTableStyleSheet : TTTableStyleSheet {
+  CGFloat _scale;
 }
 
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-  return TTIsSupportedOrientation(interfaceOrientation);
-}
-
+@property (nonatomic, assign) CGFloat scale;
 
 @end
