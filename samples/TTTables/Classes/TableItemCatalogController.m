@@ -33,8 +33,22 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
 
     self.variableHeightRows = YES;
 
+    UISwitch* groupedSwitch = [[UISwitch alloc] init];
+    [groupedSwitch addTarget:self
+                      action:@selector(didSwitchGroup:)
+            forControlEvents:UIControlEventValueChanged];
+
+    groupedSwitch.on = (self.tableViewStyle == UITableViewStyleGrouped) ? YES : NO;
+
+    UISwitch* editingSwitch = [[UISwitch alloc] init];
+    [editingSwitch addTarget:self
+                      action:@selector(didSwitchEditing:)
+            forControlEvents:UIControlEventValueChanged];
+
+    editingSwitch.on = self.editing;
+
     self.dataSource = [TTSectionedDataSource dataSourceWithObjects:
-      @"",
+      @"The items",
       [[TTTableTitleItem item]
         applyTitle:@"TTTableTitleItem"],
       [[[TTTableSubtitleItem item]
@@ -70,9 +84,52 @@ characters and followed by this URL http://bit.ly/1234"]],
         applyCaption:@"TTTableControlItem"],
       [[TTTableLongTextItem item]
         applyText:kLoremIpsum],
+
+      @"Configuration",
+      [[[TTTableControlItem item]
+        applyControl:groupedSwitch]
+        applyCaption:@"Grouped"],
+      [[[TTTableControlItem item]
+        applyControl:editingSwitch]
+        applyCaption:@"Editing"],
+
       nil];
+
+    TT_RELEASE_SAFELY(groupedSwitch);
+    TT_RELEASE_SAFELY(editingSwitch);
   }
+
   return self;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+  return TTIsSupportedOrientation(interfaceOrientation);
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)didSwitchGroup:(UISwitch*)theSwitch {
+  if (theSwitch.on) {
+    self.tableViewStyle = UITableViewStyleGrouped;
+  } else {
+    self.tableViewStyle = UITableViewStylePlain;
+  }
+
+  // Force the old table view out of existence.
+  [self setTableView:nil];
+
+  self.variableHeightRows = YES;
+
+  // And then create a new one.
+  [self showModel:YES];
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)didSwitchEditing:(UISwitch*)theSwitch {
+  [self setEditing:theSwitch.on animated:YES];
 }
 
 
