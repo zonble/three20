@@ -56,6 +56,7 @@
 
 // Core
 #import "Three20/Three20Core.h"
+#import "Three20/TTTimer.h"
 
 // UI
 #import "Three20/TTGlobalUI.h"
