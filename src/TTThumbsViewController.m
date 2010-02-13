@@ -48,9 +48,9 @@ static CGFloat kThumbSpacing = 4;
   return _photoSource.maxPhotoIndex+1 < _photoSource.numberOfPhotos;
 }
 
-- (NSInteger)columnCount {
-  CGFloat width = TTScreenBounds().size.width;
-  return round((width - kThumbSpacing*2) / (kThumbSize+kThumbSpacing));
+- (NSInteger)columnCountForTableView:(UITableView*)tableView {
+  CGFloat width = tableView.width;
+  return round((width - kThumbSpacing*3) / (kThumbSize+kThumbSpacing*2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ static CGFloat kThumbSpacing = 4;
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section {
   NSInteger maxIndex = _photoSource.maxPhotoIndex;
-  NSInteger columnCount = self.columnCount;
+  NSInteger columnCount = [self columnCountForTableView:tableView];
   if (maxIndex >= 0) {
     maxIndex += 1;
     NSInteger count =  ceil((maxIndex / columnCount) + (maxIndex % columnCount ? 1 : 0));
@@ -110,7 +110,7 @@ static CGFloat kThumbSpacing = 4;
     }
     return [[[TTTableMoreButtonItem item] applySubtitle:subtitle] applyTitle:text];
   } else {
-    NSInteger columnCount = self.columnCount;
+    NSInteger columnCount = [self columnCountForTableView:tableView];
     return [_photoSource photoAtIndex:indexPath.row * columnCount];
   }
 }
@@ -128,7 +128,7 @@ static CGFloat kThumbSpacing = 4;
   if ([cell isKindOfClass:[TTThumbsTableViewCell class]]) {
     TTThumbsTableViewCell* thumbsCell = (TTThumbsTableViewCell*)cell;
     thumbsCell.delegate = _delegate;
-    thumbsCell.columnCount = self.columnCount;
+    thumbsCell.columnCount = [self columnCountForTableView:tableView];
   }
 }
 
