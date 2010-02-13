@@ -26,6 +26,8 @@
 #import "Three20/TTNavigator.h"
 #import "Three20/TTTableStyleSheet.h"
 
+#import "Three20/TTSplitNavigator.h"
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 static const CGFloat kSmallMargin = 6;
@@ -82,6 +84,7 @@ static const CGFloat kMaxLabelHeight = 2000;
     _item = [object retain];
 
     TTTableLinkedItem* item = object;
+<<<<<<< HEAD
     if (![item isKindOfClass:[TTTableLinkedItem class]]) {
       self.accessoryType = UITableViewCellAccessoryNone;
       self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -94,10 +97,27 @@ static const CGFloat kMaxLabelHeight = 2000;
       self.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
 
     } else if (nil != item.urlPath) {
-      TTNavigationMode navigationMode = [[TTNavigator navigator].URLMap
+      TTNavigator* navigator = nil;
+      
+      BOOL isDifferentNavigator = NO;
+#ifdef __IPHONE_3_2
+      if ([TTSplitNavigator isSplitNavigatorActive]) {
+        navigator = [[TTSplitNavigator splitNavigator] navigatorForURLPath:item.URL];
+        isDifferentNavigator = navigator != self.responsibleNavigator;
+      } else {
+        navigator = [TTNavigator navigator];
+      }
+#else
+      navigator = [TTNavigator navigator];
+#endif
+
+      TTNavigationMode navigationMode = [navigator.URLMap
         navigationModeForURL:item.urlPath];
 
-      if (navigationMode == TTNavigationModeCreate ||
+      if (isDifferentNavigator) {
+        self.accessoryType = UITableViewCellAccessoryNone;
+
+      } else if (navigationMode == TTNavigationModeCreate ||
           navigationMode == TTNavigationModeShare) {
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
       } else {

@@ -23,6 +23,9 @@ extern const CGFloat kEditingIndentationWidth;
 extern const CGFloat kReorderButtonWidth;
 
 @class TTTableStyleSheet;
+#ifdef __IPHONE_3_2
+@class TTNavigator;
+#endif
 
 /**
  * The base class for Three20 table cells.
@@ -40,6 +43,9 @@ extern const CGFloat kReorderButtonWidth;
  */
 @interface TTTableViewCell : UITableViewCell {
   TTTableStyleSheet* _styleSheet;
+#ifdef __IPHONE_3_2
+  TTNavigator* _responsibleNavigator;
+#endif
 }
 
 @property (nonatomic, retain) id object;
@@ -74,6 +80,10 @@ extern const CGFloat kReorderButtonWidth;
 - (CGFloat)contentWidthWithTableView: (UITableView*)tableView
                            indexPath: (NSIndexPath*)indexPath
                              padding: (UIEdgeInsets)padding;
+
+#ifdef __IPHONE_3_2
+@property(nonatomic,retain) TTNavigator* responsibleNavigator;
+#endif
 
 /**
  * Calculate the best label heights for this cell's current height.

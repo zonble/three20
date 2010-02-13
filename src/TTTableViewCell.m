@@ -16,6 +16,10 @@
 
 #import "Three20/TTTableViewCell.h"
 
+#ifdef __IPHONE_3_2
+#import "Three20/TTNavigator.h"
+#endif
+
 #import "Three20/TTGlobalUI.h"
 #import "Three20/TTGlobalStyle.h"
 
@@ -32,6 +36,10 @@ const CGFloat kTableIndexWidth              = 32;
 @implementation TTTableViewCell
 
 @synthesize styleSheet = _styleSheet;
+
+#ifdef __IPHONE_3_2
+@synthesize responsibleNavigator = _responsibleNavigator;
+#endif
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

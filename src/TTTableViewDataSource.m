@@ -34,6 +34,10 @@
 @synthesize model = _model;
 @synthesize styleSheet = _styleSheet;
 
+#ifdef __IPHONE_3_2
+@synthesize responsibleNavigator = _responsibleNavigator;
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // class public
 
@@ -105,6 +109,9 @@
   if ([cell isKindOfClass:[TTTableViewCell class]]) {
     TTTableViewCell* ttCell = (TTTableViewCell*)cell;
     [ttCell setStyleSheet:self.styleSheet];
+#ifdef __IPHONE_3_2
+    [ttCell setResponsibleNavigator:_responsibleNavigator];
+#endif
     [ttCell setObject:object];
   }
 
