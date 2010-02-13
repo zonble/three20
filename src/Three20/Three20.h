@@ -143,7 +143,27 @@
 #import "Three20/TTEmailComposer.h"
 
 // Network
-#import "Three20/Three20Network.h"
+#import "Three20/TTGlobalNetwork.h"
+
+#import "Three20/TTModel.h"
+#import "Three20/TTModelDelegate.h"
+#import "Three20/TTURLRequestModel.h"
+#import "Three20/TTNavigator.h"
+#import "Three20/TTURLAction.h"
+#import "Three20/TTURLMap.h"
+#import "Three20/TTURLObject.h"
+#ifdef __IPHONE_3_2
+#import "Three20/TTSplitNavigator.h"
+#endif
+
+#import "Three20/TTUserInfo.h"
+#import "Three20/TTURLCache.h"
+#import "Three20/TTURLRequestQueue.h"
+#import "Three20/TTURLRequest.h"
+#import "Three20/TTURLResponse.h"
+#import "Three20/TTURLDataResponse.h"
+#import "Three20/TTURLImageResponse.h"
+#import "Three20/TTURLXMLResponse.h"
 
 // Style
 #import "Three20/TTGlobalStyle.h"
