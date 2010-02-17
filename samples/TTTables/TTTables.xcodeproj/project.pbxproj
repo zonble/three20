@@ -23,6 +23,8 @@
 		6E14D60E10DF641C00445222 /* InsetItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E14D60D10DF641C00445222 /* InsetItemCell.m */; };
 		6E14D61610DF682F00445222 /* CustomTableItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E14D61510DF682F00445222 /* CustomTableItemController.m */; };
 		6E14D6AC10DF6F1700445222 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E14D6AB10DF6F1700445222 /* Icon.png */; };
+		6EC5AB97113810DA0050F3C3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC5AB96113810DA0050F3C3 /* SystemConfiguration.framework */; };
+		6EC5AB9B113810F60050F3C3 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EC5AB9A113810F60050F3C3 /* MessageUI.framework */; };
 		EB383B6510BBF62B0000B2D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB383B6410BBF62B0000B2D2 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +80,8 @@
 		6E14D61410DF682F00445222 /* CustomTableItemController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableItemController.h; sourceTree = "<group>"; };
 		6E14D61510DF682F00445222 /* CustomTableItemController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableItemController.m; sourceTree = "<group>"; };
 		6E14D6AB10DF6F1700445222 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		6EC5AB96113810DA0050F3C3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		6EC5AB9A113810F60050F3C3 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* TTTables-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTTables-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		EB383B6410BBF62B0000B2D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -92,6 +96,8 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				EB383B6510BBF62B0000B2D2 /* QuartzCore.framework in Frameworks */,
 				6E14D2F710DF159C00445222 /* libThree20.a in Frameworks */,
+				6EC5AB97113810DA0050F3C3 /* SystemConfiguration.framework in Frameworks */,
+				6EC5AB9B113810F60050F3C3 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +135,8 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				6EC5AB96113810DA0050F3C3 /* SystemConfiguration.framework */,
+				6EC5AB9A113810F60050F3C3 /* MessageUI.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
