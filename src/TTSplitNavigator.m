@@ -125,7 +125,7 @@ static TTSplitNavigator* gSplitNavigator = nil;
     // Not implemented
     TTDASSERT(NO);
   }
-  
+
   [barButtonItem retain];
   [_popoverButton release];
   _popoverButton = barButtonItem;
@@ -147,7 +147,7 @@ static TTSplitNavigator* gSplitNavigator = nil;
     // Not implemented
     TTDASSERT(NO);
   }
-  
+
   TT_RELEASE_SAFELY(_popoverButton);
   TT_RELEASE_SAFELY(_popoverController);
 }
@@ -234,7 +234,7 @@ static TTSplitNavigator* gSplitNavigator = nil;
 - (void) restoreViewControllersWithDefaultURLs:(NSArray*)urls {
   NSMutableArray* viewControllers = [[NSMutableArray alloc]
                                      initWithCapacity:TTNavigatorSplitViewCount];
-  
+
   for (NSInteger ix = TTNavigatorSplitViewBegin; ix < TTNavigatorSplitViewEnd; ++ix) {
     TTNavigator* navigator = [_navigators objectAtIndex:ix];
     NSString* url = [urls objectAtIndex:ix];
@@ -245,7 +245,7 @@ static TTSplitNavigator* gSplitNavigator = nil;
   }
 
   self.rootViewController.viewControllers = viewControllers;
-  
+
   [self.window addSubview:self.rootViewController.view];
 
   TT_RELEASE_SAFELY(viewControllers);
