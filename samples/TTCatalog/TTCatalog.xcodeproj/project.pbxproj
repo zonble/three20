@@ -200,7 +200,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				6EDF556711530ADC001259AD /* MessageUI.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -234,6 +233,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6EDF556711530ADC001259AD /* MessageUI.framework */,
 				BE1D84390F8D104B00EC8BB8 /* QuartzCore.framework */,
 				BEE7FD0E0F358198002788A5 /* Three20.xcodeproj */,
 				2892E40F0DC94CBA00A64D0F /* CoreGraphics.framework */,
