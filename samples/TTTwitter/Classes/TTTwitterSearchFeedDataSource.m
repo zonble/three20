@@ -62,9 +62,9 @@
                                  [tweet.created formatRelativeTime]]
                                                 lineBreaks:YES URLs:YES];
     TTDASSERT(nil != styledText);
-    [items addObject:[TTTableStyledTextItem itemWithText:styledText]];
+    [items addObject:[[TTTableStyledTextItem item] applyStyledText:styledText]];
   }
-  
+
   self.items = items;
   TT_RELEASE_SAFELY(items);
 }

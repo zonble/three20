@@ -19,6 +19,7 @@
 		6E105AD2112CDBCC00549F42 /* TTTwitterTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E105AD1112CDBCC00549F42 /* TTTwitterTweet.m */; };
 		6E94C738116D985F0012B12C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E94C736116D985F0012B12C /* Default.png */; };
 		6E94C73D116D98920012B12C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E94C73C116D98920012B12C /* Icon.png */; };
+		6EDF558B11530B24001259AD /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EDF558A11530B24001259AD /* MessageUI.framework */; };
 		6EECCB78112CE5B700A8908C /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 6EECCB77112CE5B700A8908C /* README.mdown */; };
 		EB383B6110BBF6200000B2D2 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB383B5F10BBF6180000B2D2 /* libThree20.a */; };
 		EB383B6510BBF62B0000B2D2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB383B6410BBF62B0000B2D2 /* QuartzCore.framework */; };
@@ -71,6 +72,8 @@
 		6E94C736116D985F0012B12C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Resources/Default.png; sourceTree = SOURCE_ROOT; };
 		6E94C73C116D98920012B12C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		6EECCB77112CE5B700A8908C /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
+		6EDF558A11530B24001259AD /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		6EECCB77112CE5B700A8908C /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* TTTwitter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTTwitter-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		EB383B5710BBF6180000B2D2 /* Three20.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../../src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		EB383B6410BBF62B0000B2D2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -87,6 +90,7 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				EB383B6110BBF6200000B2D2 /* libThree20.a in Frameworks */,
 				EB383B6510BBF62B0000B2D2 /* QuartzCore.framework in Frameworks */,
+				6EDF558B11530B24001259AD /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -122,6 +126,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				6EDF558A11530B24001259AD /* MessageUI.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
