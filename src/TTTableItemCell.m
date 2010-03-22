@@ -84,7 +84,6 @@ static const CGFloat kMaxLabelHeight = 2000;
     _item = [object retain];
 
     TTTableLinkedItem* item = object;
-<<<<<<< HEAD
     if (![item isKindOfClass:[TTTableLinkedItem class]]) {
       self.accessoryType = UITableViewCellAccessoryNone;
       self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -98,11 +97,11 @@ static const CGFloat kMaxLabelHeight = 2000;
 
     } else if (nil != item.urlPath) {
       TTNavigator* navigator = nil;
-      
+
       BOOL isDifferentNavigator = NO;
 #ifdef __IPHONE_3_2
       if ([TTSplitNavigator isSplitNavigatorActive]) {
-        navigator = [[TTSplitNavigator splitNavigator] navigatorForURLPath:item.URL];
+        navigator = [[TTSplitNavigator splitNavigator] navigatorForURLPath:item.urlPath];
         isDifferentNavigator = navigator != self.responsibleNavigator;
       } else {
         navigator = [TTNavigator navigator];

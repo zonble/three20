@@ -20,6 +20,10 @@
 
 @class TTTableStyleSheet;
 
+#ifdef __IPHONE_3_2
+@class TTNavigator;
+#endif
+
 @protocol TTTableViewDataSource <UITableViewDataSource, TTModel, UISearchDisplayDelegate>
 
 /**
@@ -28,6 +32,10 @@
 @property (nonatomic, retain) id<TTModel> model;
 
 @property (nonatomic, retain) TTTableStyleSheet* styleSheet;
+
+#ifdef __IPHONE_3_2
+@property (nonatomic, retain) TTNavigator* responsibleNavigator;
+#endif
 
 /**
  *
@@ -131,22 +139,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifdef __IPHONE_3_2
-@class TTNavigator;
-#endif
-
 @interface TTTableViewDataSource : NSObject <TTTableViewDataSource> {
   id<TTModel> _model;
   TTTableStyleSheet* _styleSheet;
-  
+
 #ifdef __IPHONE_3_2
   TTNavigator* _responsibleNavigator;
 #endif
 }
-
-#ifdef __IPHONE_3_2
-@property (nonatomic, retain) TTNavigator* responsibleNavigator;
-#endif
 
 @end
 
