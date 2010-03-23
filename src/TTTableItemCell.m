@@ -1571,12 +1571,14 @@ static const CGFloat kMaxLabelHeight = 2000;
 - (void)layoutSubviews {
   [super layoutSubviews];
 
+  CGFloat controlWidth;
   if ([TTTableControlItemCell shouldSizeControlToFit:_item.control]) {
     if ([_item.control isKindOfClass:[UISlider class]]) {
       _item.control.frame = CGRectInset(self.contentView.bounds, kControlPadding, 0);
     } else {
       _item.control.frame = CGRectInset(self.contentView.bounds, 2, kSpacing/2);
     }
+    controlWidth = _item.control.frame.size.width;
   } else {
     CGFloat minX = kControlPadding;
     CGFloat contentWidth = self.contentView.width - kControlPadding;
@@ -1602,13 +1604,16 @@ static const CGFloat kMaxLabelHeight = 2000;
     [self.contentView addSubview:_item.control];
     _item.control.frame = CGRectMake(minX, floor((self.contentView.height - _item.control.height) / 2),
                                 contentWidth, _item.control.height);
+    [_item.control sizeToFit];
+    controlWidth = _item.control.frame.size.width;
   }
 
   CGFloat contentWidth = self.contentView.width
-    - self.styleSheet.padding.left - self.styleSheet.padding.right;
+    - self.styleSheet.padding.left - self.styleSheet.padding.right - controlWidth;
   CGFloat textContentWidth = contentWidth;
 
-  if (![TTTableControlItemCell shouldRespectControlPadding:_item.control]) {
+  if (![TTTableControlItemCell shouldRespectControlPadding:_item.control] &&
+      ![TTTableControlItemCell shouldConsiderControlIntrinsicSize:_item.control]) {
     textContentWidth += kControlPadding;
   }
 
