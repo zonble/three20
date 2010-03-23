@@ -392,7 +392,7 @@ static const CGFloat kMaxLabelHeight = 2000;
     self.textLabel.lineBreakMode        = [self.styleSheet titleLineBreakMode];
     self.textLabel.numberOfLines        = [self.styleSheet titleNumberOfLines];
     self.textLabel.textAlignment        = [self.styleSheet titleTextAlignment];
-  }  
+  }
 }
 
 @end
@@ -536,7 +536,7 @@ static const CGFloat kMaxLabelHeight = 2000;
     self.detailTextLabel.lineBreakMode        = [self.styleSheet subtitleLineBreakMode];
     self.detailTextLabel.numberOfLines        = [self.styleSheet subtitleNumberOfLines];
     self.detailTextLabel.textAlignment        = [self.styleSheet subtitleTextAlignment];
-  }  
+  }
 }
 
 @end
@@ -892,7 +892,7 @@ static const CGFloat kMaxLabelHeight = 2000;
     self.detailTextLabel.lineBreakMode        = [self.styleSheet captionTitleLineBreakMode];
     self.detailTextLabel.numberOfLines        = [self.styleSheet captionTitleNumberOfLines];
     self.detailTextLabel.textAlignment        = [self.styleSheet captionTitleTextAlignment];
-  }  
+  }
 }
 
 @end
@@ -979,7 +979,7 @@ static const CGFloat kMaxLabelHeight = 2000;
     self.textLabel.adjustsFontSizeToFitWidth =
       [self.styleSheet summaryAdjustsFontSizeToFitWidth];
     self.textLabel.minimumFontSize           = [self.styleSheet summaryMinimumFontSize];
-  }  
+  }
 }
 
 @end
@@ -1302,7 +1302,7 @@ static const CGFloat kMaxLabelHeight = 2000;
       [self.styleSheet moreButtonSubtitleNumberOfLines];
     self.detailTextLabel.textAlignment        =
       [self.styleSheet moreButtonSubtitleTextAlignment];
-  }  
+  }
 }
 
 
@@ -1400,7 +1400,7 @@ static const CGFloat kMaxLabelHeight = 2000;
 
     TTDASSERT(nil != self.styleSheet);
     TTDASSERT(nil != self.styleSheet.titleFont);
-  }  
+  }
 }
 
 @end
@@ -1509,13 +1509,13 @@ static const CGFloat kMaxLabelHeight = 2000;
       _label.contentInset = UIEdgeInsetsZero;
     } else {
       _label.text = nil;
-      _label.contentInset = UIEdgeInsetsZero;    
+      _label.contentInset = UIEdgeInsetsZero;
     }
 
     if (!_label.text.font) {
       _label.text.font = [self.styleSheet styledTextFont];
     }
-  }  
+  }
 }
 
 @end
@@ -1592,7 +1592,7 @@ static const CGFloat kMaxLabelHeight = 2000;
     if (!_item.control.height) {
       [_item.control sizeToFit];
     }
-    
+
     if ([TTTableControlItemCell shouldConsiderControlIntrinsicSize:_item.control]) {
       minX += contentWidth - _item.control.width;
     }
@@ -1812,7 +1812,7 @@ static const CGFloat kMaxLabelHeight = 2000;
     self.textLabel.lineBreakMode        = [self.styleSheet longTextLineBreakMode];
     self.textLabel.numberOfLines        = [self.styleSheet longTextNumberOfLines];
     self.textLabel.textAlignment        = [self.styleSheet longTextTextAlignment];
-  }  
+  }
 }
 
 @end
