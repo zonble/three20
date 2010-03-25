@@ -17,6 +17,7 @@
 		28F335F11007B36200424DE2 /* DemoTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28F335F01007B36200424DE2 /* DemoTableViewController.xib */; };
 		6E94C673116D97F40012B12C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E94C671116D97F40012B12C /* Default.png */; };
 		6E94C674116D97F40012B12C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6E94C672116D97F40012B12C /* Icon.png */; };
+		6E94CCC0117017B00012B12C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E94CCBF117017B00012B12C /* MessageUI.framework */; };
 		CC85CDA31167DF1700D3FE00 /* Three20.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC85CDA21167DF1700D3FE00 /* Three20.bundle */; };
 		CC85CDA51167DF3B00D3FE00 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC85CDA41167DF3B00D3FE00 /* QuartzCore.framework */; };
 		CC85CDFB1167E22E00D3FE00 /* libThree20.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC85CDC61167E0BB00D3FE00 /* libThree20.a */; };
@@ -72,6 +73,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6E94C671116D97F40012B12C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = ../Resources/Default.png; sourceTree = SOURCE_ROOT; };
 		6E94C672116D97F40012B12C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Resources/Icon.png; sourceTree = SOURCE_ROOT; };
+		6E94CCBF117017B00012B12C /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* TTNibDemo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TTNibDemo-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		CC85CD6D1167DE7F00D3FE00 /* Three20.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Three20.xcodeproj; path = ../../src/Three20.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CC85CDA21167DF1700D3FE00 /* Three20.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Three20.bundle; path = ../../src/Three20.bundle; sourceTree = SOURCE_ROOT; };
@@ -104,6 +106,7 @@
 				2892E4100DC94CBA00A64D0F /* CoreGraphics.framework in Frameworks */,
 				CC85CDA51167DF3B00D3FE00 /* QuartzCore.framework in Frameworks */,
 				CC85CDFB1167E22E00D3FE00 /* libThree20.a in Frameworks */,
+				6E94CCC0117017B00012B12C /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +141,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				6E94CCBF117017B00012B12C /* MessageUI.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";

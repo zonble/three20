@@ -22,6 +22,7 @@
 		6E311D3B116BC4330045C0DF /* TTURLObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E311D3A116BC4330045C0DF /* TTURLObject.h */; };
 		6E311D5D116BC5B30045C0DF /* TTURLPatternInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E311D5B116BC5B30045C0DF /* TTURLPatternInternal.m */; };
 		6E311D65116BC6370045C0DF /* TTURLPatternInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E311D64116BC6370045C0DF /* TTURLPatternInternal.h */; };
+		6E311E06116BCEC60045C0DF /* UILabelAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5AB3F11380B300050F3C3 /* UILabelAdditions.m */; };
 		6E35CCB610912B210066B478 /* NSMutableArrayAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CCB410912B210066B478 /* NSMutableArrayAdditions.m */; };
 		6E35CCC210912BE10066B478 /* NSMutableDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CCC010912BE10066B478 /* NSMutableDictionaryAdditions.m */; };
 		6E35CCFD10912C870066B478 /* NSMutableDictionaryAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E35CCFB10912C870066B478 /* NSMutableDictionaryAdditions.h */; };
@@ -100,13 +101,11 @@
 		6EB0117B11118052004D204C /* TTImageLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EB0117A11118052004D204C /* TTImageLayer.h */; };
 		6EB013891112C513004D204C /* TTImageViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB013871112C513004D204C /* TTImageViewInternal.m */; };
 		6EB0138B1112C538004D204C /* TTImageViewInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EB0138A1112C538004D204C /* TTImageViewInternal.h */; };
+		6EC5AB5A11380CB30050F3C3 /* TTDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1F6C5D10B36C32003DAA1F /* TTDebug.m */; };
+		6EC5AB9E113811310050F3C3 /* TTURLImageResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E14D81210E0A12700445222 /* TTURLImageResponse.m */; };
 		6EEFB6C71162717F009B479E /* TTURLRequestModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EEFB6C61162717F009B479E /* TTURLRequestModel.h */; };
 		6EEFB6C911627188009B479E /* TTURLRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EEFB6C811627188009B479E /* TTURLRequestModel.m */; };
 		6EEFB6DE11627305009B479E /* TTModelDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EEFB6DD11627305009B479E /* TTModelDelegate.h */; };
-		6EC5AB4011380B300050F3C3 /* UILabelAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5AB3F11380B300050F3C3 /* UILabelAdditions.m */; };
-		6EC5AB4211380B3E0050F3C3 /* UILabelAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EC5AB4111380B3E0050F3C3 /* UILabelAdditions.h */; };
-		6EC5AB5A11380CB30050F3C3 /* TTDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1F6C5D10B36C32003DAA1F /* TTDebug.m */; };
-		6EC5AB9E113811310050F3C3 /* TTURLImageResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E14D81210E0A12700445222 /* TTURLImageResponse.m */; };
 		BE1288060F896A0A00F65EA2 /* TTStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = BE1288050F896A0A00F65EA2 /* TTStyle.h */; };
 		BE1288080F896A1900F65EA2 /* TTStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = BE1288070F896A1900F65EA2 /* TTStyle.m */; };
 		BE1288CB0F89812E00F65EA2 /* TTShape.m in Sources */ = {isa = PBXBuildFile; fileRef = BE1288CA0F89812E00F65EA2 /* TTShape.m */; };
@@ -309,7 +308,6 @@
 		EB9E71CE10B782F100DE563C /* NSMutableDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CCC010912BE10066B478 /* NSMutableDictionaryAdditions.m */; };
 		EBA17A2010B4DDD500835016 /* NSDataAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA17A1E10B4DDD500835016 /* NSDataAdditions.m */; };
 		EBA17A3810B4DF5E00835016 /* NSDataAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = EBA17A3710B4DF5E00835016 /* NSDataAdditions.h */; };
-		EBAE96A610D1F3C700F497CA /* UILabelAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAE96A510D1F3C700F497CA /* UILabelAdditions.m */; };
 		EBBB349710B36CCE00AD5BCF /* TTDebug.h in Headers */ = {isa = PBXBuildFile; fileRef = EBBB349610B36CCE00AD5BCF /* TTDebug.h */; };
 		EBC60EDF10D5AA9300D1997B /* TTTableStyleSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC60EDD10D5AA9300D1997B /* TTTableStyleSheet.m */; };
 		EBC60EE110D5AAA400D1997B /* TTTableStyleSheet.h in Headers */ = {isa = PBXBuildFile; fileRef = EBC60EE010D5AAA400D1997B /* TTTableStyleSheet.h */; };
@@ -416,11 +414,11 @@
 		6EB0117A11118052004D204C /* TTImageLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTImageLayer.h; path = Three20/TTImageLayer.h; sourceTree = "<group>"; };
 		6EB013871112C513004D204C /* TTImageViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTImageViewInternal.m; sourceTree = "<group>"; };
 		6EB0138A1112C538004D204C /* TTImageViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTImageViewInternal.h; path = Three20/TTImageViewInternal.h; sourceTree = "<group>"; };
+		6EC5AB3F11380B300050F3C3 /* UILabelAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILabelAdditions.m; sourceTree = "<group>"; };
+		6EC5AB4111380B3E0050F3C3 /* UILabelAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILabelAdditions.h; path = Three20/UILabelAdditions.h; sourceTree = "<group>"; };
 		6EEFB6C61162717F009B479E /* TTURLRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTURLRequestModel.h; path = Three20/TTURLRequestModel.h; sourceTree = "<group>"; };
 		6EEFB6C811627188009B479E /* TTURLRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTURLRequestModel.m; sourceTree = "<group>"; };
 		6EEFB6DD11627305009B479E /* TTModelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTModelDelegate.h; path = Three20/TTModelDelegate.h; sourceTree = "<group>"; };
-		6EC5AB3F11380B300050F3C3 /* UILabelAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UILabelAdditions.m; sourceTree = "<group>"; };
-		6EC5AB4111380B3E0050F3C3 /* UILabelAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UILabelAdditions.h; path = Three20/UILabelAdditions.h; sourceTree = "<group>"; };
 		BE1288050F896A0A00F65EA2 /* TTStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TTStyle.h; path = Three20/TTStyle.h; sourceTree = "<group>"; };
 		BE1288070F896A1900F65EA2 /* TTStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTStyle.m; sourceTree = "<group>"; };
 		BE1288CA0F89812E00F65EA2 /* TTShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTShape.m; sourceTree = "<group>"; };
@@ -1504,7 +1502,6 @@
 				6E94C98F1170037B0012B12C /* TTTabItem.h in Headers */,
 				6E94C991117003E60012B12C /* TTTabDelegate.h in Headers */,
 				6E94C9EF117006180012B12C /* TTTabBarInternal.h in Headers */,
-				EBDC847A10C44AD400257247 /* UILabelAdditions.h in Headers */,
 				EBC60EE110D5AAA400D1997B /* TTTableStyleSheet.h in Headers */,
 				6E8F1EAE1124B31D0000543B /* TTEmail.h in Headers */,
 				6E8F1EAF1124B31D0000543B /* TTEmailComposer.h in Headers */,
@@ -1725,11 +1722,11 @@
 				6E94C9851170030B0012B12C /* TTTab.m in Sources */,
 				6E94C98D117003730012B12C /* TTTabItem.m in Sources */,
 				6E94C9ED1170060B0012B12C /* TTTabBarInternal.m in Sources */,
-				6EC5AB4011380B300050F3C3 /* UILabelAdditions.m in Sources */,
 				EBC60EDF10D5AA9300D1997B /* TTTableStyleSheet.m in Sources */,
 				6E8F1E9D1124B00F0000543B /* TTEmailComposer.m in Sources */,
 				6E8F1EAB1124B1AB0000543B /* TTEmail.m in Sources */,
 				6EC5AB9E113811310050F3C3 /* TTURLImageResponse.m in Sources */,
+				6E311E06116BCEC60045C0DF /* UILabelAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

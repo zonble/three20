@@ -1,5 +1,5 @@
 //
-// Copyright 2009 Facebook
+// Copyright 2009-2010 Facebook
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -49,19 +49,19 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
 
     //self.tableViewSeparatorStyle = UITableViewCellSeparatorStyleNone;
 
-    // Uncomment this to see how the table cells look against a custom background color 
+    // Uncomment this to see how the table cells look against a custom background color
     //self.tableView.backgroundColor = [UIColor yellowColor];
 
     //NSString* localImage = @"bundle://tableIcon.png";
     NSString* remoteImage = @"http://profile.ak.fbcdn.net/v223/35/117/q223792_6978.jpg";
     UIImage* defaultPerson = TTIMAGE(@"bundle://defaultPerson.png");
-    TTStyle* imageStyle = 
+    TTStyle* imageStyle =
       [TTShapeStyle styleWithShape:[TTRectangleShape shape] next:
       [TTSolidBorderStyle styleWithColor:[UIColor lightGrayColor] width:1 next:
       [TTSolidFillStyle styleWithColor:[UIColor whiteColor] next:
       [TTInsetStyle styleWithInset:UIEdgeInsetsMake(3, 3, 3, 3) next:
       [TTContentStyle styleWithNext:nil]]]]];
-    
+
     // This demonstrates how to create a table with standard table "fields".  Many of these
     // fields with URLs that will be visited when the row is selected.
 

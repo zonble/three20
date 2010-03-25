@@ -50,7 +50,7 @@ static const CGFloat kMaxLabelHeight = 2000;
 - (void)dealloc {
   TT_RELEASE_SAFELY(_item);
 
-	[super dealloc];
+  [super dealloc];
 }
 
 
@@ -136,7 +136,7 @@ static const CGFloat kMaxLabelHeight = 2000;
 - (void)dealloc {
   TT_RELEASE_SAFELY(_styledImageView);
 
-	[super dealloc];
+  [super dealloc];
 }
 
 
@@ -413,8 +413,8 @@ static const CGFloat kMaxLabelHeight = 2000;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier {
   // Override the given style to ensure we have the detailTextLabel
   if (self = [super initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier]) {
-	}
-	return self;
+  }
+  return self;
 }
 
 
@@ -563,8 +563,8 @@ static const CGFloat kMaxLabelHeight = 2000;
     _timestampLabel = [[UILabel alloc] init];
     [self.contentView addSubview:_messageLabel];
     [self.contentView addSubview:_timestampLabel];
-	}
-	return self;
+  }
+  return self;
 }
 
 
@@ -573,7 +573,7 @@ static const CGFloat kMaxLabelHeight = 2000;
   TT_RELEASE_SAFELY(_messageLabel);
   TT_RELEASE_SAFELY(_timestampLabel);
 
-	[super dealloc];
+  [super dealloc];
 }
 
 
@@ -797,8 +797,8 @@ static const CGFloat kMaxLabelHeight = 2000;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier {
   // Override the given style to ensure we have the detailTextLabel
   if (self = [super initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier]) {
-	}
-	return self;
+  }
+  return self;
 }
 
 
@@ -1161,8 +1161,8 @@ static const CGFloat kMaxLabelHeight = 2000;
       initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [_activityIndicatorView sizeToFit];
     [self.contentView addSubview:_activityIndicatorView];
-	}
-	return self;
+  }
+  return self;
 }
 
 
@@ -1554,8 +1554,8 @@ static const CGFloat kMaxLabelHeight = 2000;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString*)identifier {
   if (self = [super initWithStyle:style reuseIdentifier:identifier]) {
     _item = nil;
-	}
-	return self;
+  }
+  return self;
 }
 
 
@@ -1563,7 +1563,7 @@ static const CGFloat kMaxLabelHeight = 2000;
 - (void)dealloc {
   TT_RELEASE_SAFELY(_item);
 
-	[super dealloc];
+  [super dealloc];
 }
 
 

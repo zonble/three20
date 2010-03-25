@@ -43,21 +43,15 @@
 - (void)createModel {
   self.dataSource = [TTSectionedDataSource dataSourceWithObjects:
     @"TTTableViewController",
-    [TTTableTextItem itemWithText:@"Table No Nib" URL:@"tt://viewController/DemoTableViewController"],
-    [TTTableTextItem itemWithText:@"Table with default NIB" URL:@"tt://nib/DemoTableViewController"],
-    [TTTableTextItem itemWithText:@"Table with specific NIB" URL:@"tt://nib/FooterTableViewController/DemoTableViewController"],
+    [[[TTTableTitleItem item] applyTitle:@"Table No Nib"] applyURLPath:@"tt://viewController/DemoTableViewController"],
+    [[[TTTableTitleItem item] applyTitle:@"Table with default NIB"] applyURLPath:@"tt://nib/DemoTableViewController"],
+    [[[TTTableTitleItem item] applyTitle:@"Table with specific NIB"] applyURLPath:@"tt://nib/FooterTableViewController/DemoTableViewController"],
 
     @"Other",
-    [TTTableTextItem itemWithText:@"TTPostController" URL:@"tt://nib/DemoPostController"],
-    [TTTableTextItem itemWithText:@"TTViewController" URL:@"tt://nib/DemoViewController"],
+    [[[TTTableTitleItem item] applyTitle:@"TTPostController"] applyURLPath:@"tt://nib/DemoPostController"],
+    [[[TTTableTitleItem item] applyTitle:@"TTViewController"] applyURLPath:@"tt://nib/DemoViewController"],
 
-    [TTTableTextItem itemWithText:@"TTMessageController" URL:@"tt://modal/DemoMessageController"],
-//    [TTTableTextItem itemWithText:@"TTWebController" URL:@"tt://g"],
-//    [TTTableTextItem itemWithText:@"TTPopupViewController" URL:@"tt://h"],
-//
-//    [TTTableTextItem itemWithText:@"TTPhotoViewController" URL:@"tt://i"],
-//    [TTTableTextItem itemWithText:@"TTAlertViewController" URL:@"tt://k"],
-//    [TTTableTextItem itemWithText:@"TTActionSheetController" URL:@"tt://viewController/TTActionSheetController"],
+    [[[TTTableTitleItem item] applyTitle:@"TTMessageController"] applyURLPath:@"tt://modal/DemoMessageController"],
 
     nil];
 }

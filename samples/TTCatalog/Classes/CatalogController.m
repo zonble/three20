@@ -42,12 +42,11 @@
     [[[TTTableTitleItem item] applyTitle:@"Styled Labels in Table"] applyURLPath:@"tt://styledTextTableTest"],
     [[[TTTableTitleItem item] applyTitle:@"Web Images in Table"] applyURLPath:@"tt://imageTest2"],
     [[[TTTableTitleItem item] applyTitle:@"Table With Shadow"] applyURLPath:@"tt://tableWithShadow"],
-  
+
     @"Models",
-    [[[TTTableTitleItem item] applyTitle:@"Table Items"]      applyURLPath:@"tt://tableItemTest"],
     [[[TTTableTitleItem item] applyTitle:@"Model Search"]     applyURLPath:@"tt://searchTest"],
     [[[TTTableTitleItem item] applyTitle:@"Model States"]     applyURLPath:@"tt://tableTest"],
-    
+
     @"General",
     [[[TTTableTitleItem item] applyTitle:@"Web Image"]        applyURLPath:@"tt://imageTest1"],
     [[[TTTableTitleItem item] applyTitle:@"YouTube Player"]   applyURLPath:@"tt://youTubeTest"],

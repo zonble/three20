@@ -61,8 +61,8 @@
   UILabel* _timestampLabel;
 }
 
-@property(nonatomic,readonly,retain) UILabel* messageLabel;
-@property(nonatomic,readonly,retain) UILabel* timestampLabel;
+@property (nonatomic, readonly, retain) UILabel* messageLabel;
+@property (nonatomic, readonly, retain) UILabel* timestampLabel;
 
 @end
 
@@ -99,8 +99,8 @@
   BOOL                      _animating;
 }
 
-@property(nonatomic,readonly,retain) UIActivityIndicatorView* activityIndicatorView;
-@property(nonatomic)                 BOOL                     animating;
+@property (nonatomic, readonly, retain) UIActivityIndicatorView* activityIndicatorView;
+@property (nonatomic)                 BOOL                     animating;
 
 @end
 
@@ -112,7 +112,7 @@
   TTActivityLabel*      _activityLabel;
 }
 
-@property(nonatomic,readonly,retain) TTActivityLabel* activityLabel;
+@property (nonatomic, readonly, retain) TTActivityLabel* activityLabel;
 
 @end
 
@@ -123,7 +123,7 @@
   TTStyledTextLabel* _label;
 }
 
-@property(nonatomic,readonly) TTStyledTextLabel* label;
+@property (nonatomic, readonly) TTStyledTextLabel* label;
 
 @end
 
@@ -134,7 +134,7 @@
   TTTableControlItem* _item;
 }
 
-@property(nonatomic,readonly,retain) TTTableControlItem* item;
+@property (nonatomic, readonly, retain) TTTableControlItem* item;
 
 @end
 

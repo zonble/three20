@@ -97,8 +97,8 @@
 
   self.dataSource = [TTSectionedDataSource dataSourceWithObjects:
     @"TTTableViewController",
-    [TTTableTextItem itemWithText:@"This demonstates a table"],
-    [TTTableTextItem itemWithText:nibString],
+    [[TTTableTitleItem item] applyTitle:@"This demonstates a table"],
+    [[TTTableTitleItem item] applyTitle:nibString],
 
     nil];
 }

@@ -30,17 +30,17 @@
 
     self.dataSource =
       [TTListDataSource dataSourceWithObjects:
-       [TTTableTextItem itemWithText:@"Drag down to see gutter shadow"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Drag up to see gutter shadow"],
-       [TTTableTextItem itemWithText:@"Table Item"],
-       [TTTableTextItem itemWithText:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Drag down to see gutter shadow"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Drag up to see gutter shadow"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
+       [[TTTableTitleItem item] applyTitle:@"Table Item"],
        nil];
   }
 

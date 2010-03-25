@@ -72,9 +72,9 @@
 /**
  * The separator style of the table view.
  */
-@property(nonatomic) UITableViewCellSeparatorStyle tableViewSeparatorStyle;
+@property (nonatomic) UITableViewCellSeparatorStyle tableViewSeparatorStyle;
 
-/** 
+/**
  * Indicates if the table should support non-fixed row heights.
  */
 @property (nonatomic) BOOL variableHeightRows;

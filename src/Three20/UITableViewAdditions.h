@@ -37,7 +37,7 @@
  *
  * Tables with no separator add one pixel of vertical spacing to rowHeightWithTableView.
  */
-@property(nonatomic,readonly) CGFloat tableCellExtraHeight;
+@property (nonatomic, readonly) CGFloat tableCellExtraHeight;
 
 - (void)scrollToTop:(BOOL)animated;
 

@@ -27,7 +27,7 @@
  */
 @property (nonatomic, retain) id<TTModel> model;
 
-@property(nonatomic,retain) TTTableStyleSheet* styleSheet;
+@property (nonatomic, retain) TTTableStyleSheet* styleSheet;
 
 /**
  *

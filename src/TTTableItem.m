@@ -623,6 +623,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 }
 
 - (void)dealloc {
+  TT_RELEASE_SAFELY(_subtitle);
   self.model = nil;
   [super dealloc];
 }
@@ -642,14 +643,6 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 - (TTTableMoreButtonItem*)applyIsLoading:(BOOL)isLoading {
   self.isLoading = isLoading;
   return self;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)dealloc {
-  TT_RELEASE_SAFELY(_subtitle);
-
-  [super dealloc];
 }
 
 
