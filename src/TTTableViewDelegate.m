@@ -117,7 +117,7 @@
         TTOpenURL(item.urlPath);
       }
 #else
-      TTOpenURL(item.URL);
+      TTOpenURL(item.urlPath);
 #endif
     }
 
