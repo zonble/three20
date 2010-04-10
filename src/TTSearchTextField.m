@@ -313,7 +313,7 @@ static const CGFloat kDesiredTableHeight = 150;
     if( [cell isKindOfClass:[TTTableViewCell class]] ) {
       return [(TTTableViewCell*)cell rowHeightWithTableView:tableView indexPath:indexPath];
     } else {
-      return _rowHeight;
+      return 0;
     }
   }
 }

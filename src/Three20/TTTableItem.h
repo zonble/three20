@@ -38,6 +38,21 @@
  *  \- TTTableControlItem
  */
 
+// There are a number of properties used below. Each property name should behave consistently
+// with the following diagrams:
+// /-----------------------------\
+// | Title title title title...  |
+// | Subtitle subtitle subtit... |
+// | Message message message mes |
+// | sage message message mes... |
+// \-----------------------------/
+
+// /-----------------------------\
+// |                   timestamp |
+// | Text text text text text te |
+// | xt text text text text text |
+// \-----------------------------/
+
 @class TTStyledText;
 @class TTStyle;
 
@@ -72,7 +87,7 @@
  * @return The class name used to instantiate the table view cell for this item.
  * @default nil
  */
--(Class)cellClass;
+- (Class)cellClass;
 
 @end
 
@@ -98,7 +113,7 @@
 /**
  * A chaining method. Designed to return self so that you can apply more properties.
  *
- * @param  userURLPath        The URL accessed when this cell is tapped.
+ * @param  userURLPath        The URL accessed when this cell's accessory is tapped.
  * @return self
  */
 - (TTTableLinkedItem*)applyAccessoryURLPath:(NSString*)accessoryURLPath;
@@ -149,7 +164,7 @@
 /**
  * A chaining method. Designed to return self so that you can apply more properties.
  *
- * @param  imageRightAligned  A style to apply to the image item.
+ * @param  imageRightAligned  Whether or not the image is right aligned.
  * @return self
  */
 - (TTTableImageLinkedItem*)applyImageRightAligned:(BOOL)imageRightAligned;
@@ -190,7 +205,7 @@
  * @param  subtitle           The subtitle text.
  * @return self
  */
-- (TTTableSubtitleItem*)applySubtitle:(NSString*)title;
+- (TTTableSubtitleItem*)applySubtitle:(NSString*)subtitle;
 
 @end
 
@@ -431,47 +446,3 @@
 - (TTTableLongTextItem*)applyText:(NSString*)text;
 
 @end
-
-
-/* TODO: CLEANUP
-*/
-#if 0
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@interface TTTableGrayTextItem : TTTableTextItem
-/**
- * Properties:
- *
- * * kTableItemMessageKey
- * * kTableItemURLKey
- * * kTableItemAccessoryURLKey
- * * kTableItemImageKey
- * * kTableItemImageURLKey
- * * kTableItemImageStyleKey
- */
-@end
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@interface TTTableViewItem : TTTableItem {
-@private
-  NSString* _caption;
-  UIView*   _view;
-}
-
-@property (nonatomic, copy) NSString* caption;
-@property (nonatomic, retain) UIView* view;
-
-/**
- * Properties:
- *
- * * kTableItemCaptionKey
- * * kTableItemViewKey
- */
-+ (id)itemWithProperties:(NSDictionary*)properties;
-
-- (id)initWithProperties:(NSDictionary*)properties;
-
-@end
-#endif

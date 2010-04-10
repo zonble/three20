@@ -21,6 +21,9 @@
 
 #import "Three20/TTTableItemCell.h"
 
+// The keys below are used for the NSCoder interface. They are defined here to ensure consistency
+// throughout the code below.
+
 // /-----------------------------\
 // | Title title title title...  |
 // | Subtitle subtitle subtit... |
@@ -281,7 +284,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableTitleItemCell class];
 }
 
@@ -332,7 +335,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableSubtitleItemCell class];
 }
 
@@ -392,7 +395,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableMessageItemCell class];
 }
 
@@ -456,7 +459,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableCaptionItemCell class];
 }
 
@@ -511,7 +514,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableSummaryItemCell class];
 }
 
@@ -545,7 +548,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableLinkItemCell class];
 }
 
@@ -578,7 +581,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableButtonItemCell class];
 }
 
@@ -647,7 +650,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableMoreButtonItemCell class];
 }
 
@@ -697,7 +700,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableActivityItemCell class];
 }
 
@@ -778,7 +781,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableStyledTextItemCell class];
 }
 
@@ -838,7 +841,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableControlItemCell class];
 }
 
@@ -893,7 +896,7 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
--(Class)cellClass {
+- (Class)cellClass {
   return [TTTableLongTextItemCell class];
 }
 
@@ -916,135 +919,3 @@ static const CGFloat kDefaultStyledTextPadding = 6;
 }
 
 @end
-
-
-/* TODO: CLEANUP
-
-
-#pragma mark -
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation TTTableImageItem
-
-@synthesize imageURL      = _imageURL;
-@synthesize defaultImage  = _defaultImage;
-@synthesize imageStyle    = _imageStyle;
-
-+ (id)itemWithProperties:(NSDictionary*)properties {
-  return [[[self alloc] initWithProperties:properties] autorelease];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark NSObject
-
-- (id)initWithProperties:(NSDictionary*)properties {
-  if( self = [super initWithProperties:properties] ) {
-    self.imageURL     = [properties objectForKey:kTableItemImageURLKey];
-    self.defaultImage = [properties objectForKey:kTableItemDefaultImageKey];
-    self.imageStyle   = [properties objectForKey:kTableItemImageStyleKey];
-  }
-
-  return self;
-}
-
-- (void)dealloc {
-  TT_RELEASE_SAFELY(_imageURL);
-  TT_RELEASE_SAFELY(_defaultImage);
-  TT_RELEASE_SAFELY(_imageStyle);
-  [super dealloc];
-}
-
--(Class)cellClass {
-  return [TTTableImageItemCell class];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark NSCoding
-
-- (id)initWithCoder:(NSCoder*)decoder {
-  if (self = [super initWithCoder:decoder]) {
-    self.imageURL = [decoder decodeObjectForKey:kTableItemImageURLKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder*)encoder {
-  [super encodeWithCoder:encoder];
-  if (self.imageURL) {
-    [encoder encodeObject:self.imageURL forKey:kTableItemImageURLKey];
-  }
-}
-@end
-
-
-#pragma mark -
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation TTTableRightImageItem
-@end
-
-
-#pragma mark -
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation TTTableGrayTextItem
-@end
-
-
-#pragma mark -
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@implementation TTTableViewItem
-
-@synthesize caption = _caption;
-@synthesize view    = _view;
-
-+ (id)itemWithProperties:(NSDictionary*)properties {
-  return [[[self alloc] initWithProperties:properties] autorelease];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark NSObject
-
-- (id)initWithProperties:(NSDictionary*)properties {
-  if( self = [super init] ) {
-    self.caption  = [properties objectForKey:kTableItemCaptionKey];
-    self.view     = [properties objectForKey:kTableItemViewKey];
-  }
-
-  return self;
-}
-
-- (void)dealloc {
-  TT_RELEASE_SAFELY(_caption);
-  TT_RELEASE_SAFELY(_view);
-  [super dealloc];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark NSCoding
-
-- (id)initWithCoder:(NSCoder*)decoder {
-  if (self = [super initWithCoder:decoder]) {
-    self.caption = [decoder decodeObjectForKey:kTableItemCaptionKey];
-    self.view = [decoder decodeObjectForKey:kTableItemViewKey];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder*)encoder {
-  [super encodeWithCoder:encoder];
-  if (self.caption) {
-    [encoder encodeObject:self.caption forKey:kTableItemCaptionKey];
-  }
-  if (self.view) {
-    [encoder encodeObject:self.view forKey:kTableItemViewKey];
-  }
-}
-
-@end
-*/

@@ -142,19 +142,3 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 @interface TTTableLongTextItemCell : TTTableImageLinkedItemCell
 @end
-
-
-/* TODO: CLEANUP
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-@interface TTTableFlushViewCell : TTTableViewCell {
-  TTTableViewItem* _item;
-  UIView* _view;
-}
-
-@property (nonatomic, readonly, retain) TTTableViewItem* item;
-@property (nonatomic, readonly, retain) UIView* view;
-
-@end
-*/
