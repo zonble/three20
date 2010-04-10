@@ -1,5 +1,5 @@
 //
-// Copyright 2009 Facebook
+// Copyright 2009-2010 Facebook
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@ static NSString* kLoremIpsum = @"Lorem ipsum dolor sit amet, consectetur adipisi
 
     NSString* remoteImage = @"http://profile.ak.fbcdn.net/v223/35/117/q223792_6978.jpg";
     UIImage* defaultPerson = TTIMAGE(@"bundle://defaultPerson.png");
-    TTStyle* imageStyle = 
+    TTStyle* imageStyle =
       [TTShapeStyle styleWithShape:[TTRectangleShape shape] next:
       [TTSolidBorderStyle styleWithColor:[UIColor lightGrayColor] width:1 next:
       [TTSolidFillStyle styleWithColor:[UIColor whiteColor] next:

@@ -1,5 +1,5 @@
 //
-// Copyright 2009 Facebook
+// Copyright 2009-2010 Facebook
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@
   if (self = [super initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier]) {
     _insetView = [[TTView alloc] init];
 
-    _insetView.style = 
+    _insetView.style =
       [TTShapeStyle styleWithShape:[TTRectangleShape shape] next:
       [TTSolidFillStyle styleWithColor:[UIColor lightGrayColor] next:
       [TTInnerShadowStyle styleWithColor:RGBACOLOR(0,0,0,0.4) blur:3 offset:CGSizeMake(0, 2)
