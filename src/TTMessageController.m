@@ -56,8 +56,8 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)initWithNibName:(NSString*)nibName bundle:(NSBundle*)bundle {
-  if (self = [super initWithNibName:nibName bundle:bundle]) {
+- (id)init {
+  if (self = [super init]) {
     _fields = [[NSArray alloc] initWithObjects:
                [[[TTMessageRecipientField alloc] initWithTitle: TTLocalizedString(@"To:", @"")
                                                       required: YES] autorelease],
@@ -81,12 +81,6 @@
   }
 
   return self;
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (id)init {
-  return [self initWithNibName:nil bundle:nil];
 }
 
 
