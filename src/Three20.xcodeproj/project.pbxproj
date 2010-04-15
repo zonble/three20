@@ -25,6 +25,7 @@
 		6E35CCC210912BE10066B478 /* NSMutableDictionaryAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E35CCC010912BE10066B478 /* NSMutableDictionaryAdditions.m */; };
 		6E35CCFD10912C870066B478 /* NSMutableDictionaryAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E35CCFB10912C870066B478 /* NSMutableDictionaryAdditions.h */; };
 		6E35CCFE10912C870066B478 /* NSMutableArrayAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E35CCFC10912C870066B478 /* NSMutableArrayAdditions.h */; };
+		6E620D3C1177693300035C6C /* TTURLDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E14D7E610E09A2300445222 /* TTURLDataResponse.m */; };
 		6E7330D711269204005CA078 /* TTSplitNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7330D511269204005CA078 /* TTSplitNavigator.m */; };
 		6E7330E01126921D005CA078 /* TTSplitNavigator.h in Headers */ = {isa = PBXBuildFile; fileRef = 6E7330DF1126921D005CA078 /* TTSplitNavigator.h */; };
 		6E7330FD1126958B005CA078 /* TTNavigatorWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E7330FB1126958B005CA078 /* TTNavigatorWindow.m */; };
@@ -1751,6 +1752,7 @@
 				6E7330FD1126958B005CA078 /* TTNavigatorWindow.m in Sources */,
 				6E733107112696AB005CA078 /* TTSplitNavigatorWindow.m in Sources */,
 				6E73318411269E4F005CA078 /* TTSingleNavigatorWindow.m in Sources */,
+				6E620D3C1177693300035C6C /* TTURLDataResponse.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
