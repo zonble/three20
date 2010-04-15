@@ -57,11 +57,6 @@
 @property (nonatomic, assign)   id<TTWebControllerDelegate> delegate;
 
 /**
- * The internal webview.
- */
-@property (nonatomic, readonly) UIWebView* webView;
-
-/**
  * Navigate to the given URL.
  */
 - (void)openURL:(NSURL*)URL;

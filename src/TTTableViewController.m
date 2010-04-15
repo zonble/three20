@@ -77,7 +77,7 @@ static const CGFloat kBannerViewHeight = 22;
     _tableOverlayView = [[UIView alloc] initWithFrame:frame];
     _tableOverlayView.autoresizesSubviews = YES;
     _tableOverlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth
-                                        | UIViewAutoresizingFlexibleBottomMargin;
+    | UIViewAutoresizingFlexibleBottomMargin;
     NSInteger tableIndex = [_tableView.superview.subviews indexOfObject:_tableView];
     if (tableIndex != NSNotFound) {
       [_tableView.superview addSubview:_tableOverlayView];
@@ -119,14 +119,14 @@ static const CGFloat kBannerViewHeight = 22;
 }
 
 - (void)fadingOutViewDidStop:(NSString*)animationID finished:(NSNumber*)finished
-        context:(void*)context {
+                     context:(void*)context {
   UIView* view = (UIView*)context;
   [view removeFromSuperview];
   [view release];
 }
 
 - (void)hideMenuAnimationDidStop:(NSString*)animationID finished:(NSNumber*)finished
-        context:(void*)context {
+                         context:(void*)context {
   UIView* menuView = (UIView*)context;
   [menuView removeFromSuperview];
 }
@@ -134,17 +134,8 @@ static const CGFloat kBannerViewHeight = 22;
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // NSObject
 
-- (id)initWithNibName:(NSString*)nibName bundle:(NSBundle*)bundle {
-  if (self = [super initWithNibName:nibName bundle:bundle]) {
-    _lastInterfaceOrientation = self.interfaceOrientation;
-    _tableViewStyle = UITableViewStylePlain;
-  }
-
-  return self;
-}
-
 - (id)initWithStyle:(UITableViewStyle)style {
-  if (self = [self initWithNibName:nil bundle:nil]) {
+  if (self = [super init]) {
     _tableViewStyle = style;
     _tableViewSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _lastInterfaceOrientation = self.interfaceOrientation;
@@ -172,24 +163,9 @@ static const CGFloat kBannerViewHeight = 22;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// UIViewController
-
--(void)viewDidLoad {
-  [super viewDidLoad];
-  self.tableView; //create the tableView if it doesn't already exist
-
-  TTDASSERT(![self.view isKindOfClass:TTTableView.class]);
-  TTDASSERT([self.tableView isKindOfClass:TTTableView.class]);
-  TTDASSERT(self.tableView.superview == self.view);
-  _tableViewStyle = self.tableView.style;
-
-  UIColor* backgroundColor = _tableViewStyle == UITableViewStyleGrouped
-  ? TTSTYLEVAR(tableGroupedBackgroundColor)
-  : TTSTYLEVAR(tablePlainBackgroundColor);
-  if (backgroundColor) {
-    _tableView.backgroundColor = backgroundColor;
-    self.view.backgroundColor = backgroundColor;
-  }
+- (void)loadView {
+  [super loadView];
+  self.tableView;
 }
 
 - (void)viewDidUnload {
@@ -354,11 +330,11 @@ static const CGFloat kBannerViewHeight = 22;
   if (show) {
     if (!self.model.isLoaded || ![self canShowModel]) {
       NSString* title = _dataSource
-                        ? [_dataSource titleForLoading:NO]
-                        : [self defaultTitleForLoading];
+      ? [_dataSource titleForLoading:NO]
+      : [self defaultTitleForLoading];
       if (title.length) {
         TTActivityLabel* label = [[[TTActivityLabel alloc] initWithStyle:TTActivityLabelStyleWhiteBox]
-                                    autorelease];
+                                  autorelease];
         label.text = title;
         label.backgroundColor = _tableView.backgroundColor;
         self.loadingView = label;
@@ -377,8 +353,8 @@ static const CGFloat kBannerViewHeight = 22;
       UIImage* image = [_dataSource imageForError:_modelError];
       if (title.length || subtitle.length || image) {
         TTErrorView* errorView = [[[TTErrorView alloc] initWithTitle:title
-                                                       subtitle:subtitle
-                                                       image:image] autorelease];
+                                                            subtitle:subtitle
+                                                               image:image] autorelease];
         errorView.backgroundColor = _tableView.backgroundColor;
         self.errorView = errorView;
       } else {
@@ -399,8 +375,8 @@ static const CGFloat kBannerViewHeight = 22;
     UIImage* image = [_dataSource imageForEmpty];
     if (title.length || subtitle.length || image) {
       TTErrorView* errorView = [[[TTErrorView alloc] initWithTitle:title
-                                                     subtitle:subtitle
-                                                     image:image] autorelease];
+                                                          subtitle:subtitle
+                                                             image:image] autorelease];
       errorView.backgroundColor = _tableView.backgroundColor;
       self.emptyView = errorView;
     } else {
@@ -421,17 +397,17 @@ static const CGFloat kBannerViewHeight = 22;
     if (_isViewAppearing && _flags.isShowingModel) {
       if ([_dataSource respondsToSelector:@selector(tableView:willUpdateObject:atIndexPath:)]) {
         NSIndexPath* newIndexPath = [_dataSource tableView:_tableView willUpdateObject:object
-                                                 atIndexPath:indexPath];
+                                               atIndexPath:indexPath];
         if (newIndexPath) {
           if (newIndexPath.length == 1) {
             TTDCONDITIONLOG(TTDFLAG_TABLEVIEWMODIFICATIONS, @"UPDATING SECTION AT %@", newIndexPath);
             NSInteger sectionIndex = [newIndexPath indexAtPosition:0];
             [_tableView reloadSections:[NSIndexSet indexSetWithIndex:sectionIndex]
-                        withRowAnimation:UITableViewRowAnimationTop];
+                      withRowAnimation:UITableViewRowAnimationTop];
           } else if (newIndexPath.length == 2) {
             TTDCONDITIONLOG(TTDFLAG_TABLEVIEWMODIFICATIONS, @"UPDATING ROW AT %@", newIndexPath);
             [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                        withRowAnimation:UITableViewRowAnimationTop];
+                              withRowAnimation:UITableViewRowAnimationTop];
           }
           [self invalidateView];
         } else {
@@ -449,20 +425,20 @@ static const CGFloat kBannerViewHeight = 22;
     if (_isViewAppearing && _flags.isShowingModel) {
       if ([_dataSource respondsToSelector:@selector(tableView:willInsertObject:atIndexPath:)]) {
         NSIndexPath* newIndexPath = [_dataSource tableView:_tableView willInsertObject:object
-                                                 atIndexPath:indexPath];
+                                               atIndexPath:indexPath];
         if (newIndexPath) {
           if (newIndexPath.length == 1) {
             TTDCONDITIONLOG(TTDFLAG_TABLEVIEWMODIFICATIONS, @"INSERTING SECTION AT %@", newIndexPath);
             NSInteger sectionIndex = [newIndexPath indexAtPosition:0];
             [_tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex]
-                        withRowAnimation:UITableViewRowAnimationTop];
+                      withRowAnimation:UITableViewRowAnimationTop];
           } else if (newIndexPath.length == 2) {
             TTDCONDITIONLOG(TTDFLAG_TABLEVIEWMODIFICATIONS, @"INSERTING ROW AT %@", newIndexPath);
             [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                        withRowAnimation:UITableViewRowAnimationTop];
+                              withRowAnimation:UITableViewRowAnimationTop];
 
             [_tableView scrollToRowAtIndexPath:newIndexPath
-                        atScrollPosition:UITableViewScrollPositionNone animated:NO];
+                              atScrollPosition:UITableViewScrollPositionNone animated:NO];
           }
           [self invalidateView];
         } else {
@@ -480,17 +456,17 @@ static const CGFloat kBannerViewHeight = 22;
     if (_isViewAppearing && _flags.isShowingModel) {
       if ([_dataSource respondsToSelector:@selector(tableView:willRemoveObject:atIndexPath:)]) {
         NSIndexPath* newIndexPath = [_dataSource tableView:_tableView willRemoveObject:object
-                                                 atIndexPath:indexPath];
+                                               atIndexPath:indexPath];
         if (newIndexPath) {
           if (newIndexPath.length == 1) {
             TTDCONDITIONLOG(TTDFLAG_TABLEVIEWMODIFICATIONS, @"DELETING SECTION AT %@", newIndexPath);
             NSInteger sectionIndex = [newIndexPath indexAtPosition:0];
             [_tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex]
-                        withRowAnimation:UITableViewRowAnimationLeft];
+                      withRowAnimation:UITableViewRowAnimationLeft];
           } else if (newIndexPath.length == 2) {
             TTDCONDITIONLOG(TTDFLAG_TABLEVIEWMODIFICATIONS, @"DELETING ROW AT %@", newIndexPath);
             [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                        withRowAnimation:UITableViewRowAnimationLeft];
+                              withRowAnimation:UITableViewRowAnimationLeft];
           }
           [self invalidateView];
         } else {
@@ -516,8 +492,8 @@ static const CGFloat kBannerViewHeight = 22;
     _tableView.separatorStyle = _tableViewSeparatorStyle;
 
     UIColor* backgroundColor = _tableViewStyle == UITableViewStyleGrouped
-      ? TTSTYLEVAR(tableGroupedBackgroundColor)
-      : TTSTYLEVAR(tablePlainBackgroundColor);
+    ? TTSTYLEVAR(tableGroupedBackgroundColor)
+    : TTSTYLEVAR(tablePlainBackgroundColor);
     if (backgroundColor) {
       _tableView.backgroundColor = backgroundColor;
       self.view.backgroundColor = backgroundColor;
