@@ -43,7 +43,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  return [self initWithNibName:nil bundle:nil];
+  if (self = [self initWithNibName:nil bundle:nil]) {
+  }
+
+  return self;
 }
 
 
@@ -54,9 +57,6 @@
  */
 - (id)initWithNibName:(NSString*)nibName bundle:(NSBundle *)bundle {
   if (self = [super initWithNibName:nibName bundle:bundle]) {
-#ifdef DEBUG
-    m_initCalled = YES;
-#endif
     _navigationBarStyle = UIBarStyleDefault;
     _statusBarStyle = UIStatusBarStyleDefault;
 
@@ -85,20 +85,6 @@
   [self viewDidUnload];
 
   [super dealloc];
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-/**
- * Must not replace the awakeFromNib with init, because it will cause the view
- * that is loaded from the NIB to be overwritten.
- *
- * If a viewcontroller is not using NIBs, then this is not called anyway, so it
- * is not clear why this change was ever made.
- */
-- (void)awakeFromNib {
-  [super awakeFromNib];
-  //[self init];
 }
 
 
@@ -174,13 +160,6 @@
     self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.view.backgroundColor = TTSTYLEVAR(backgroundColor);
   }
-}
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-- (void)viewDidLoad {
-  TTDASSERT(m_initCalled); //make sure that we got properly initialized
-  [super viewDidLoad];
 }
 
 

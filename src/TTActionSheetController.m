@@ -52,19 +52,26 @@
       self.actionSheet.title = title;
     }
   }
+
   return self;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithTitle:(NSString*)title {
-  return [self initWithTitle:title delegate:nil];
+  if (self = [self initWithTitle:title delegate:nil]) {
+  }
+
+  return self;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  return [self initWithTitle:nil delegate:nil];
+  if (self = [self initWithTitle:nil delegate:nil]) {
+  }
+
+  return self;
 }
 
 

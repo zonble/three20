@@ -54,19 +54,26 @@
       self.alertView.message = message;
     }
   }
+
   return self;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithTitle:(NSString*)title message:(NSString*)message {
-  return [self initWithTitle:title message:message delegate:nil];
+  if (self = [self initWithTitle:title message:message delegate:nil]) {
+  }
+
+  return self;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  return [self initWithTitle:nil message:nil delegate:nil];
+  if (self = [self initWithTitle:nil message:nil delegate:nil]) {
+  }
+
+  return self;
 }
 
 

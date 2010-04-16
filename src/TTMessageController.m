@@ -88,7 +88,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  return [self initWithNibName:nil bundle:nil];
+  if (self = [self initWithNibName:nil bundle:nil]) {
+  }
+
+  return self;
 }
 
 

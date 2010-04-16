@@ -87,7 +87,10 @@ static const CGFloat kMarginY = 6;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  return [self initWithNavigatorURL:nil query:nil];
+  if (self = [self initWithNavigatorURL:nil query:nil]) {
+  }
+
+  return self;
 }
 
 

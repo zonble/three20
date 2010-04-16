@@ -76,7 +76,10 @@ static const CGFloat kBannerViewHeight = 22;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  return [self initWithStyle:UITableViewStylePlain];
+  if (self = [self initWithStyle:UITableViewStylePlain]) {
+  }
+
+  return self;
 }
 
 
