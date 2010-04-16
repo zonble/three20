@@ -43,7 +43,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)init {
-  if (self = [super init]) {
+  return [self initWithNibName:nil bundle:nil];
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Since this is the designated initializer for UIViewController, this contains
+ * initialization common to all init* methods.
+ */
+- (id)initWithNibName:(NSString*)nibName bundle:(NSBundle *)bundle {
+  if (self = [super initWithNibName:nibName bundle:bundle]) {
+#ifdef DEBUG
+    m_initCalled = YES;
+#endif
     _navigationBarStyle = UIBarStyleDefault;
     _statusBarStyle = UIStatusBarStyleDefault;
 
@@ -76,8 +89,16 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * Must not replace the awakeFromNib with init, because it will cause the view
+ * that is loaded from the NIB to be overwritten.
+ *
+ * If a viewcontroller is not using NIBs, then this is not called anyway, so it
+ * is not clear why this change was ever made.
+ */
 - (void)awakeFromNib {
-  [self init];
+  [super awakeFromNib];
+  //[self init];
 }
 
 
@@ -137,14 +158,29 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * If we are loading from a nib, then assume it knows how to set itself up.
+ * Otherwise, we don't need to call super (per the Apple documentation) and we
+ * just setup the view manually.
+ */
 - (void)loadView {
-  [super loadView];
+  if (nil != self.nibName) {
+    [super loadView];
 
-  CGRect frame = self.wantsFullScreenLayout ? TTScreenBounds() : TTNavigationFrame();
-  self.view = [[[UIView alloc] initWithFrame:frame] autorelease];
-  self.view.autoresizesSubviews = YES;
-  self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.view.backgroundColor = TTSTYLEVAR(backgroundColor);
+  } else {
+    CGRect frame = self.wantsFullScreenLayout ? TTScreenBounds() : TTNavigationFrame();
+    self.view = [[[UIView alloc] initWithFrame:frame] autorelease];
+    self.view.autoresizesSubviews = YES;
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.view.backgroundColor = TTSTYLEVAR(backgroundColor);
+  }
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (void)viewDidLoad {
+  TTDASSERT(m_initCalled); //make sure that we got properly initialized
+  [super viewDidLoad];
 }
 
 

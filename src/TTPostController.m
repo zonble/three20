@@ -45,8 +45,28 @@ static const CGFloat kMarginY = 6;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+- (id)initWithNibName:(NSString *)nibName bundle:(NSBundle*)bundle {
+  if (self = [super initWithNibName:nibName bundle:bundle]) {
+    self.navigationItem.leftBarButtonItem =
+    [[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel
+                                                   target: self
+                                                   action: @selector(cancel)] autorelease];
+    self.navigationItem.rightBarButtonItem =
+    [[[UIBarButtonItem alloc] initWithTitle: TTLocalizedString(@"Done", @"")
+                                      style: UIBarButtonItemStyleDone
+                                     target: self
+                                     action: @selector(post)] autorelease];
+  }
+
+  return self;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithNavigatorURL:(NSURL*)URL query:(NSDictionary*)query {
-  if (self = [super init]) {
+  if (self = [self initWithNibName:nil bundle:nil]) {
     if (nil != query) {
       _delegate = [query objectForKey:@"delegate"];
       _defaultText = [[query objectForKey:@"text"] copy];
@@ -59,16 +79,6 @@ static const CGFloat kMarginY = 6;
         _originRect = [originRect CGRectValue];
       }
     }
-
-    self.navigationItem.leftBarButtonItem =
-    [[[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemCancel
-                                                   target: self
-                                                   action: @selector(cancel)] autorelease];
-    self.navigationItem.rightBarButtonItem =
-    [[[UIBarButtonItem alloc] initWithTitle: TTLocalizedString(@"Done", @"")
-                                      style: UIBarButtonItemStyleDone
-                                     target: self
-                                     action: @selector(post)] autorelease];
   }
 
   return self;
